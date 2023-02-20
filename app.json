@@ -2,7 +2,8 @@
 	"pages": [
 		"pages/main-music/main-music",
 		"pages/main-vided/main-vided",
-		"pages/homePage/homePage"
+		"pages/homePage/homePage",
+		"components/video-item/video-item"
 	],
 	"window": {
 		"backgroundTextStyle": "light",

@@ -1,0 +1,35 @@
+// 对 count 进行格式化
+function formatCount(count) {
+	count = count - 0
+	if(count > 100000000) {
+		return (count / 100000000).toFixed(1) + "亿"
+	}
+	else if(count > 10000) {
+		return (count / 10000).toFixed(1) + "万"
+	}
+	else{
+		return count
+	}  
+}
+
+// 对 time 进行格式化
+function formatTime(time){
+	// 0. 将毫秒转为秒
+	time = time / 1000 
+	// 1. 获取时间
+	var minute = Math.floor(time / 60)
+	var second = Math.floor(time) % 60
+	return padLeft(minute) + ":" + padLeft(second) 
+}
+
+// 拼接字符串
+function padLeft(time) {
+	time = time + ""
+	return ("00" + time).slice(time.length)
+}
+
+// 使用 CommonJS 导出
+module.exports = {
+	formatCount: formatCount,
+	 formatTime: formatTime
+}

@@ -1,4 +1,6 @@
 {
 	"navigationBarTitleText": "推荐视频",
-	"usingComponents": {}
+	"usingComponents": {
+		"video-item": "/components/video-item/video-item"
+	}
 }
