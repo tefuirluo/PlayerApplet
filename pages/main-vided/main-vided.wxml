@@ -1,2 +1,9 @@
 <!--pages/main-vided/main-vided.wxml-->
-<text>pages/main-vided/main-vided.wxml</text>
+<view class="video-list">
+	<block wx:for="{{ videoList }}" wx:key="id">
+		<view>
+			<image src="{{ item.cover }}" mode=""/>
+			<view>{{ item.name }}</view>
+		</view>
+	</block>
+</view>

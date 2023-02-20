@@ -11,24 +11,26 @@
 		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {
-		"list": [{
-			"pagePath": "pages/main-music/main-music",
-			"text": "音乐",
-			"iconPath": "/assests/images/disc-line.png",
-			"selectedIconPath": "/assests/images/disc-fill.png"
-		},
-		{
-			"pagePath": "pages/main-vided/main-vided",
-			"text": "视频",
-			"iconPath": "assests/images/mv-line.png",
-			"selectedIconPath": "/assests/images/mv-fill.png"
-		},
-		{
-			"pagePath": "pages/homePage/homePage",
-			"text": "我的",
-			"iconPath": "/assests/images/user-3-line.png",
-			"selectedIconPath": "/assests/images/user-3-fill.png"
-		}]
+		"list": [
+			{
+				"pagePath": "pages/main-music/main-music",
+				"text": "音乐",
+				"iconPath": "/assests/images/disc-line.png",
+				"selectedIconPath": "/assests/images/disc-fill.png"
+			},
+			{
+				"pagePath": "pages/main-vided/main-vided",
+				"text": "视频",
+				"iconPath": "assests/images/mv-line.png",
+				"selectedIconPath": "/assests/images/mv-fill.png"
+			},
+			{
+				"pagePath": "pages/homePage/homePage",
+				"text": "我的",
+				"iconPath": "/assests/images/user-3-line.png",
+				"selectedIconPath": "/assests/images/user-3-fill.png"
+			}
+		]
 	},
 	"style": "v2",
 	"sitemapLocation": "sitemap.json"
