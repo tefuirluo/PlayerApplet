@@ -1,2 +1,9 @@
 <!--pages/detail-video/detail-video.wxml-->
-<text>detail: {{id}}</text>
+<!-- 1. video 组件播放视频 -->
+<video 
+	class="video" 
+	src="{{MvUrl}}" 
+	autoplay
+	danmu-list="{{danmuList}}"
+/>
+ 
