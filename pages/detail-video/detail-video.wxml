@@ -5,19 +5,19 @@
 	src="{{MvUrl}}" 
 	autoplay
 	danmu-list="{{danmuList}}"
+	referrer-policy="origin"
 />
-<view class="info">
-	{{mvInfo.name}}
-	{{mvInfo.publishTime}}
-</view>
-<view class="relate">
-	<block wx:for="{{relateVideo}}" wx:key="vid">
-		<view class="item">
-			<image src="{{item.coverUrl}}" mode="widthFix"/>
-			<view>
-				{{item.title}}
+<scroll-view class="content" scroll-y>
+		<view class="info">
+		{{mvInfo.name}}
+		{{mvInfo.publishTime}}
+	</view>
+	<view class="relate-video">
+		<block wx:for="{{relateVideo}}" wx:key="vid">
+			<view class="item">
+				<image src="{{item.coverUrl}}" mode="widthFix"/>
+				<view>{{item.title}}</view>
 			</view>
-		</view>
-	</block>
-</view>
- 
+		</block>
+	</view>
+</scroll-view> 
