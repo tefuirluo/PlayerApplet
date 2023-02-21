@@ -10,10 +10,15 @@
 
 <!-- 轮播图 -->
 <view>
-	<swiper class="banner" circular indicator-dots>
+	<swiper class="banner" circular indicator-dots style="height: {{bannerHeight}}px;">
 		<block wx:for="{{banners}}" wx:key="targetId">
 			<swiper-item class="item">
-				<image class="image" src="{{item.imageUrl}}" mode="aspectFill"/>
+				<image
+				 	class="banner-image"
+					src="{{item.imageUrl}}"
+					mode="widthFix"
+					bindload="onBannerImageLoad"
+				/>
 			</swiper-item>
 		</block>
 	</swiper>

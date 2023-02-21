@@ -15,6 +15,6 @@ page {
 	border-radius: 12rpx;
 	overflow: hidden;
 }
-.banner .item .image {
+.banner-image {
 	width: 100%;
 }
