@@ -43,5 +43,12 @@ Page({
 		await this.fetchTopMv()
 		// 3. 停止下拉刷新
 		wx.stopPullDownRefresh()
+	},
+	// 事件监听
+	onVideoItemTap(event){
+		// const item = event.currentTarget.dataset.item
+		// wx.navigateTo({
+		// 	url: `/pages/detail-video/detail-video?id=${item.id}`,
+		// })
 	}
 })

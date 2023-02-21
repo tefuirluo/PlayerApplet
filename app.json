@@ -3,7 +3,8 @@
 		"pages/main-music/main-music",
 		"pages/main-vided/main-vided",
 		"pages/homePage/homePage",
-		"components/video-item/video-item"
+		"components/video-item/video-item",
+		"pages/detail-video/detail-video"
 	],
 	"window": {
 		"backgroundTextStyle": "dark",

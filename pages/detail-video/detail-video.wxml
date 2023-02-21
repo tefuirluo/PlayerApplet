@@ -1,0 +1,2 @@
+<!--pages/detail-video/detail-video.wxml-->
+<text>detail: {{id}}</text>
