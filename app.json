@@ -4,7 +4,8 @@
 		"pages/main-vided/main-vided",
 		"pages/homePage/homePage",
 		"components/video-item/video-item",
-		"pages/detail-video/detail-video"
+		"pages/detail-video/detail-video",
+		"pages/detail-search/detail-search"
 	],
 	"window": {
 		"backgroundTextStyle": "dark",

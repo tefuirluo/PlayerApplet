@@ -1,4 +1,5 @@
 {
+	"navigationBarBackgroundColor": "#fafafa",
 	"usingComponents": {
 		"van-search": "@vant/weapp/search/index"
 	}
