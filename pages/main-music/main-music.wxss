@@ -6,3 +6,8 @@ page {
 /* .van-search__content {
 	background-color: #fff !important;
 } */
+
+/* 轮播图的样式 */
+.banner .item .image {
+	width: 100%;
+}
