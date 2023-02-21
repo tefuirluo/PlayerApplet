@@ -13,7 +13,7 @@
 	<swiper class="banner" circular indicator-dots>
 		<block wx:for="{{banners}}" wx:key="targetId">
 			<swiper-item class="item">
-				<image class="image" src="{{item.imageUrl}}" mode="widthFix"/>
+				<image class="image" src="{{item.imageUrl}}" mode="aspectFill"/>
 			</swiper-item>
 		</block>
 	</swiper>
