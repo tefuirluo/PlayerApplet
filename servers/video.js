@@ -17,3 +17,19 @@ export function getMvUrl(id){
 		}
 	})
 }
+export function getMvInfo(mvid){
+	return hyReqInstance.get({
+		url: "/mv/detail",
+		data: {
+			mvid
+		}
+	})
+}
+export function getMvRelate(id){
+	return hyReqInstance.get({
+		url: "/related/allvideo",
+		data: {
+			id
+		}
+	})
+}

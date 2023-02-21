@@ -6,4 +6,18 @@
 	autoplay
 	danmu-list="{{danmuList}}"
 />
+<view class="info">
+	{{mvInfo.name}}
+	{{mvInfo.publishTime}}
+</view>
+<view class="relate">
+	<block wx:for="{{relateVideo}}" wx:key="vid">
+		<view class="item">
+			<image src="{{item.coverUrl}}" mode="widthFix"/>
+			<view>
+				{{item.title}}
+			</view>
+		</view>
+	</block>
+</view>
  

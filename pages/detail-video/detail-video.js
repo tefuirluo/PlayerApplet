@@ -1,5 +1,5 @@
 // pages/detail-video/detail-video.js
-import { getMvUrl } from "../../servers/video"
+import { getMvUrl, getMvInfo, getMvRelate } from "../../servers/video"
 Page({
 
 	/**
@@ -8,6 +8,8 @@ Page({
 	data: {
 		id: 0,
 		MvUrl: '',
+		mvInfo: {},
+		relateVideo: {},
 		danmuList: [
 			{
 				text: '房东的猫',
@@ -37,9 +39,19 @@ Page({
 		 
 		// 2. 请求数据
 		this.fetchMvUrl()
+		this.fetchMvInfo()
+		this.fetchMvRelate()
 	},
 	async fetchMvUrl(id){
 		const res = await	getMvUrl(this.data.id)
 		this.setData({MvUrl: res.data.url})
+	},
+	async fetchMvInfo(){
+		const res = await getMvInfo(this.data.id)
+		this.setData({ mvInfo: res.data })
+	},
+	async fetchMvRelate(){
+		const res = await getMvRelate(this.data.id)
+		this.setData({ relateVideo: res.data })
 	}
 })
