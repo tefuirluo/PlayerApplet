@@ -27,6 +27,11 @@
 <!-- 推荐歌曲的展示 -->
 <view class="recommend">
 	<area-header title="推荐歌曲" bind:moreClick="onRecommendMoreClick" />
+	<view class="list">
+		<block wx:for="{{recommendSongs}}" wx:key="id">
+			<song-item-v1 itemData="{{item}}" />
+		</block>
+	</view>
 </view>
 <view class="ranking">
 	<area-header title="巅峰榜" hasMore="{{false}}"/>

@@ -1,4 +1,4 @@
-import { getMusicBanner } from "../../servers/music"
+import { getMusicBanner, getMusicPlayListDetail } from "../../servers/music"
 import querySelect from "../../utils/query-select"
 // import throttle from "../../utils/throttle"
 import { throttle } from "underscore"
@@ -10,10 +10,12 @@ Page({
 	data: {
 		searchValue: "",
 		banners: [],
+		recommendSongs: [],
 		bannerHeight: 150
 	},
 	onLoad(){
-		this.fetchMusicBanner()
+		this.fetchMusicBanner(),
+		this.fetchRecommendSongs()
 	},
 	// 界面的事件监听函数
 	onSearchClick(){
@@ -36,5 +38,11 @@ Page({
 	async fetchMusicBanner(){
 		const res = await getMusicBanner()
 		this.setData({ banners: res.banners })
+	},
+	async fetchRecommendSongs(){
+		const res = await getMusicPlayListDetail(3778678)
+		const playlist = res.playlist
+		const recommendSongs = playlist.tracks.slice(0, 6)
+		this.setData({ recommendSongs })
 	}
 })

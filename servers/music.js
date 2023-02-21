@@ -7,3 +7,12 @@ export function getMusicBanner(type = 0){
 		}
 	})
 }
+
+export function getMusicPlayListDetail(id){
+	return hyReqInstance.get({
+		url: "/playlist/detail",
+		data: {
+			id
+		}
+	})
+}
