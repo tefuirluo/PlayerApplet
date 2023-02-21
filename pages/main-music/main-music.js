@@ -27,6 +27,11 @@ Page({
 			this.setData({bannerHeight: res[0].height})
 		})
 	},
+	onRecommendMoreClick(){
+		wx.navigateTo({
+			url: 'url',
+		})
+	},
 	// 网络请求的方法
 	async fetchMusicBanner(){
 		const res = await getMusicBanner()
