@@ -1,8 +1,10 @@
 import { getMusicBanner } from "../../servers/music"
 import querySelect from "../../utils/query-select"
-import throttle from "../../utils/throttle"
+// import throttle from "../../utils/throttle"
+import { throttle } from "underscore"
 
-const querySelectThrottle = throttle(querySelect, 100)
+// 禁用第一次首先执行的话，传递{leading: false}，还有如果你想禁用最后一次执行的话，传递{trailing: false}。
+const querySelectThrottle = throttle(querySelect, 100, { trailing: false })
 // pages/main-music/main-music.js
 Page({
 	data: {

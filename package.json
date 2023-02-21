@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@vant/weapp": "^1.10.13"
+    "@vant/weapp": "^1.10.13",
+    "underscore": "^1.13.6"
   }
 }
