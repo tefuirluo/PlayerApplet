@@ -6,7 +6,7 @@
 		"components/video-item/video-item"
 	],
 	"window": {
-		"backgroundTextStyle": "light",
+		"backgroundTextStyle": "dark",
 		"navigationBarBackgroundColor": "#e3e3e3",
 		"navigationBarTitleText": "PlayerApplet",
 		"navigationBarTextStyle": "black"
