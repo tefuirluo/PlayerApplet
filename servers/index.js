@@ -1,3 +1,4 @@
+import {baseURL} from "./config"
 // 封装为类 => 实例
 class HYRequest {
 	constructor(baseURL){
@@ -32,5 +33,6 @@ class HYRequest {
 	}
 }
 // baseURL
-export const hyReqInstance = new HYRequest("http://codercba.com:9002")
-// export const hyReqInstance = new HYRequest("https://coderwhy-music.vercel.app/")
+export const hyReqInstance = new HYRequest(baseURL)
+// export const hyReqInstance = new HYRequest("http://codercba.com:9002")
+// export const hyReqInstance = new HYRequest("https://coderwhy-music.vercel.app")

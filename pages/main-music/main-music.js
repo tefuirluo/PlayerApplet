@@ -1,6 +1,6 @@
 import { getMusicBanner, getMusicPlayListDetail } from "../../servers/music"
+import recommendStore from "../../store/recommendStore"
 import querySelect from "../../utils/query-select"
-// import throttle from "../../utils/throttle"
 import { throttle } from "underscore"
 
 // 禁用第一次首先执行的话，传递{leading: false}，还有如果你想禁用最后一次执行的话，传递{trailing: false}。
@@ -15,7 +15,12 @@ Page({
 	},
 	onLoad(){
 		this.fetchMusicBanner(),
-		this.fetchRecommendSongs()
+		// this.fetchRecommendSongs()
+		// 发起 action
+		recommendStore.onState("recommendSongs", (value) => {
+			this.setData({ recommendSongs: value.slice(0, 6)})
+		})
+		recommendStore.dispatch("fetchRecommendSongActions")
 	},
 	// 界面的事件监听函数
 	onSearchClick(){
@@ -31,7 +36,7 @@ Page({
 	},
 	onRecommendMoreClick(){
 		wx.navigateTo({
-			url: 'url',
+			url: '/pages/detail-song/detail-song',
 		})
 	},
 	// 网络请求的方法

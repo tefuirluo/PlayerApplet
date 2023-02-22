@@ -6,7 +6,8 @@
 		"components/video-item/video-item",
 		"pages/detail-video/detail-video",
 		"pages/detail-search/detail-search",
-		"components/song-item-v1/song-item-v1"
+		"components/song-item-v1/song-item-v1",
+		"pages/detail-song/detail-song"
 	],
 	"window": {
 		"backgroundTextStyle": "dark",
