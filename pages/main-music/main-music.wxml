@@ -36,7 +36,12 @@
 <!-- 4. 热门歌单 -->
 <view class="hot-meun">
 	<area-header title="热门歌单" />
-	<scroll-view scroll-x enable-flex class="list">
+	<scroll-view 
+		scroll-x 
+		enable-flex 
+		class="list"
+		style="width: {{screenWidth}}px;"
+	>
 		<block wx:for="{{hotSongMenuList}}" wx:key="id">
 			<view class="item">
 				<menu-item itemData="{{item}}" />

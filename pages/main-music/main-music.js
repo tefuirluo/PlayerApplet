@@ -3,8 +3,10 @@ import recommendStore from "../../store/recommendStore"
 import querySelect from "../../utils/query-select"
 import { throttle } from "underscore"
 
+
 // 禁用第一次首先执行的话，传递{leading: false}，还有如果你想禁用最后一次执行的话，传递{trailing: false}。
 const querySelectThrottle = throttle(querySelect, 100, { trailing: false })
+const app = getApp()
 // pages/main-music/main-music.js
 Page({
 	data: {
@@ -12,6 +14,7 @@ Page({
 		banners: [],
 		recommendSongs: [],
 		hotSongMenuList: [],
+		screenWidth: 375,
 		bannerHeight: 150
 	},
 	onLoad(){
@@ -23,6 +26,8 @@ Page({
 			this.setData({ recommendSongs: value.slice(0, 6)})
 		})
 		recommendStore.dispatch("fetchRecommendSongActions")
+		// 获取屏幕尺寸
+		this.setData({ screenWidth: app.globalData.screenWidth })
 	},
 	// 界面的事件监听函数
 	onSearchClick(){
