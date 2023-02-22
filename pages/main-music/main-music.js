@@ -31,9 +31,12 @@ Page({
 		// 发起 action
 		recommendStore.onState("recommendSongs", this.handleRecommendSongs)
 		recommendStore.dispatch("fetchRecommendSongActions")
-		rankingStore.onState("newRanking", this.handleNewRanking)
-		rankingStore.onState("originRanking", this.handleOriginRanking)
-		rankingStore.onState("upRanking", this.handleUpRanking)
+		// rankingStore.onState("newRanking", this.handleNewRanking)
+		// rankingStore.onState("originRanking", this.handleOriginRanking)
+		// rankingStore.onState("upRanking", this.handleUpRanking)
+		rankingStore.onState("newRanking", this.geeRankingHandle("newRanking"))
+		rankingStore.onState("originRanking", this.geeRankingHandle("originRanking"))
+		rankingStore.onState("upRanking", this.geeRankingHandle("upRanking"))
 		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })
@@ -80,17 +83,23 @@ Page({
 	handleRecommendSongs(value){
 			this.setData({ recommendSongs: value.slice(0, 6)})
 	},
-	handleNewRanking(value){
-		const newRankingInfos = { ...this.data.rankingInfos, newRanking: value }
+	// handleNewRanking(value){
+	// 	const newRankingInfos = { ...this.data.rankingInfos, newRanking: value }
+	// 	this.setData({ rankingInfos:  newRankingInfos})
+	// },
+	// handleOriginRanking(value){
+	// 	const newRankingInfos = { ...this.data.rankingInfos, originRanking: value }
+	// 	this.setData({ rankingInfos:  newRankingInfos})
+	// },
+	// handleUpRanking(value){
+	// 	const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
+	// 	this.setData({ rankingInfos:  newRankingInfos})
+	// },
+	geeRankingHandle(ranking){
+		return value => {
+		const newRankingInfos = { ...this.data.rankingInfos, [ranking]: value }
 		this.setData({ rankingInfos:  newRankingInfos})
-	},
-	handleOriginRanking(value){
-		const newRankingInfos = { ...this.data.rankingInfos, originRanking: value }
-		this.setData({ rankingInfos:  newRankingInfos})
-	},
-	handleUpRanking(value){
-		const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
-		this.setData({ rankingInfos:  newRankingInfos})
+		}
 	},
 	onUnload(){
 		// 销毁
