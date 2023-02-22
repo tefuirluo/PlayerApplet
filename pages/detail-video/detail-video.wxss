@@ -13,3 +13,25 @@ page {
 	/* margin-top: 225px; */
 	height: calc(100% - 225px);
 }
+.relate-video .item{
+	display: flex;
+	align-content: center;
+	bottom: 10rpx;
+	padding: 6rpx 10rpx;
+}
+.relate-video .item .image {
+	width: 80%;
+	border-radius: 12rpx;
+  background-size: cover;
+}
+.item .content{
+	width: 100%;
+	font-size: 26rpx;
+  /* 显示两行 */
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

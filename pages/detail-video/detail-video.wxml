@@ -15,8 +15,8 @@
 	<view class="relate-video">
 		<block wx:for="{{relateVideo}}" wx:key="vid">
 			<view class="item">
-				<image src="{{item.coverUrl}}" mode="widthFix"/>
-				<view>{{item.title}}</view>
+				<image class="image" src="{{item.coverUrl}}" mode="widthFix"/>
+				<view class="content">{{item.title}}</view>
 			</view>
 		</block>
 	</view>

@@ -1,6 +1,6 @@
 <!--components/menu-area/menu-area.wxml-->
 <view class="menu">
-	<area-header title="{{title}}" />
+	<area-header title="{{title}}" bind:moreClick="onMenuMoreClick" />
 	<scroll-view 
 		scroll-x 
 		enable-flex 

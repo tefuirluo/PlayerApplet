@@ -1,5 +1,6 @@
 import { getMusicBanner, getMusicPlayListDetail, getSongMenuList } from "../../servers/music"
 import recommendStore from "../../store/recommendStore"
+import rankingStore from "../../store/rankingStore"
 import querySelect from "../../utils/query-select"
 import { throttle } from "underscore"
 
@@ -30,6 +31,7 @@ Page({
 			this.setData({ recommendSongs: value.slice(0, 6)})
 		})
 		recommendStore.dispatch("fetchRecommendSongActions")
+		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })
 	},

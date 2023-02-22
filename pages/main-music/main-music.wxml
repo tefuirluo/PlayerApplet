@@ -33,25 +33,12 @@
 		</block>
 	</view>
 </view> -->
-<!-- 4. 热门歌单 -->
-<!-- <view class="hot-meun">
-	<area-header title="热门歌单" />
-	<scroll-view 
-		scroll-x 
-		enable-flex 
-		class="list"
-		style="width: {{screenWidth}}px;"
-	>
-		<block wx:for="{{hotSongMenuList}}" wx:key="id">
-			<view class="item">
-				<menu-item itemData="{{item}}" />
-			</view>
-		</block>
-	</scroll-view>
-</view> -->
-<menu-area title="热门歌单" menuList="{{hotSongMenuList}}" />
-<menu-area title="推荐歌单" menuList="{{recMenuList}}" />
 
+<!-- 4. 歌单信息-->
+<!-- <menu-area title="热门歌单" menuList="{{hotSongMenuList}}" />
+<menu-area title="推荐歌单" menuList="{{recMenuList}}" /> -->
+
+<!-- 5. 巅峰榜 -->
 <view class="ranking">
 	<area-header title="巅峰榜" hasMore="{{false}}"/>
 </view>
