@@ -1,6 +1,6 @@
 import { getMusicBanner, getMusicPlayListDetail, getSongMenuList } from "../../servers/music"
 import recommendStore from "../../store/recommendStore"
-import rankingStore from "../../store/rankingStore"
+import rankingStore, { rankingMap } from "../../store/rankingStore"
 import querySelect from "../../utils/query-select"
 import { throttle } from "underscore"
 
@@ -34,9 +34,12 @@ Page({
 		// rankingStore.onState("newRanking", this.handleNewRanking)
 		// rankingStore.onState("originRanking", this.handleOriginRanking)
 		// rankingStore.onState("upRanking", this.handleUpRanking)
-		rankingStore.onState("newRanking", this.geeRankingHandle("newRanking"))
-		rankingStore.onState("originRanking", this.geeRankingHandle("originRanking"))
-		rankingStore.onState("upRanking", this.geeRankingHandle("upRanking"))
+		for (const key in rankingMap) {
+			rankingStore.onState(key, this.getRankingHandle(key))
+		}
+		// rankingStore.onState("newRanking", this.geeRankingHandle("newRanking"))
+		// rankingStore.onState("originRanking", this.geeRankingHandle("originRanking"))
+		// rankingStore.onState("upRanking", this.geeRankingHandle("upRanking"))
 		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })
@@ -95,7 +98,7 @@ Page({
 	// 	const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
 	// 	this.setData({ rankingInfos:  newRankingInfos})
 	// },
-	geeRankingHandle(ranking){
+	getRankingHandle(ranking){
 		return value => {
 		const newRankingInfos = { ...this.data.rankingInfos, [ranking]: value }
 		this.setData({ rankingInfos:  newRankingInfos})

@@ -1,7 +1,7 @@
 import { HYEventStore } from "hy-event-store"
 import { getMusicPlayListDetail }  from "../servers/music"
 
-const rankingMap = {
+export const rankingMap = {
 	newRanking: 3779629,
 	originRanking: 2884035,
 	upRanking: 19723756
