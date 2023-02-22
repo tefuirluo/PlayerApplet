@@ -13,9 +13,13 @@ Page({
 		searchValue: "",
 		banners: [],
 		recommendSongs: [],
-		hotSongMenuList: [],
+
 		screenWidth: 375,
-		bannerHeight: 150
+		bannerHeight: 150,
+
+		// 歌单数据
+		hotSongMenuList: [],
+		recMenuList: []
 	},
 	onLoad(){
 		this.fetchMusicBanner(),
@@ -58,7 +62,13 @@ Page({
 	// 	this.setData({ recommendSongs })
 	// }
 	async fetchHotSongMenuList(){
-		const res = await getSongMenuList()
-		this.setData({ hotSongMenuList: res.playlists })
+		// const res = await getSongMenuList()
+		// this.setData({ hotSongMenuList: res.playlists })
+		getSongMenuList().then(res=>{
+			this.setData({ hotSongMenuList: res.playlists })
+		}),
+		getSongMenuList("古风").then(res=>{
+			this.setData({ recMenuList: res.playlists })
+		})
 	}
 })

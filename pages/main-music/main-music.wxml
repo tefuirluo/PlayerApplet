@@ -34,7 +34,7 @@
 	</view>
 </view> -->
 <!-- 4. 热门歌单 -->
-<view class="hot-meun">
+<!-- <view class="hot-meun">
 	<area-header title="热门歌单" />
 	<scroll-view 
 		scroll-x 
@@ -48,7 +48,9 @@
 			</view>
 		</block>
 	</scroll-view>
-</view>
+</view> -->
+<menu-area title="热门歌单" menuList="{{hotSongMenuList}}" />
+<menu-area title="推荐歌单" menuList="{{recMenuList}}" />
 
 <view class="ranking">
 	<area-header title="巅峰榜" hasMore="{{false}}"/>
