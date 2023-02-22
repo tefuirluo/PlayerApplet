@@ -1,4 +1,4 @@
-import { getMusicBanner, getMusicPlayListDetail } from "../../servers/music"
+import { getMusicBanner, getMusicPlayListDetail, getSongMenuList } from "../../servers/music"
 import recommendStore from "../../store/recommendStore"
 import querySelect from "../../utils/query-select"
 import { throttle } from "underscore"
@@ -11,10 +11,12 @@ Page({
 		searchValue: "",
 		banners: [],
 		recommendSongs: [],
+		hotSongMenuList: [],
 		bannerHeight: 150
 	},
 	onLoad(){
 		this.fetchMusicBanner(),
+		this.fetchHotSongMenuList(),
 		// this.fetchRecommendSongs()
 		// 发起 action
 		recommendStore.onState("recommendSongs", (value) => {
@@ -44,10 +46,14 @@ Page({
 		const res = await getMusicBanner()
 		this.setData({ banners: res.banners })
 	},
-	async fetchRecommendSongs(){
-		const res = await getMusicPlayListDetail(3778678)
-		const playlist = res.playlist
-		const recommendSongs = playlist.tracks.slice(0, 6)
-		this.setData({ recommendSongs })
+	// async fetchRecommendSongs(){
+	// 	const res = await getMusicPlayListDetail(3778678)
+	// 	const playlist = res.playlist
+	// 	const recommendSongs = playlist.tracks.slice(0, 6)
+	// 	this.setData({ recommendSongs })
+	// }
+	async fetchHotSongMenuList(){
+		const res = await getSongMenuList()
+		this.setData({ hotSongMenuList: res.playlists })
 	}
 })

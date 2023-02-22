@@ -1,5 +1,5 @@
 <!--pages/main-music/main-music.wxml-->
-<!-- vant 搜索框 -->
+<!-- 1. vant 搜索框 -->
 <van-search
   value="{{ searchValue }}"
   shape="round"
@@ -8,7 +8,7 @@
 	bind:click-input="onSearchClick"
 />
 
-<!-- 轮播图 -->
+<!-- 2. 轮播图 -->
 <view>
 	<swiper class="banner" circular indicator-dots style="height: {{bannerHeight}}px;">
 		<block wx:for="{{banners}}" wx:key="targetId">
@@ -24,15 +24,27 @@
 	</swiper>
 </view>
 
-<!-- 推荐歌曲的展示 -->
-<view class="recommend">
+<!-- 3. 推荐歌曲的展示 -->
+<!-- <view class="recommend">
 	<area-header title="推荐歌曲" bind:moreClick="onRecommendMoreClick" />
 	<view class="list">
 		<block wx:for="{{recommendSongs}}" wx:key="id">
 			<song-item-v1 itemData="{{item}}" />
 		</block>
 	</view>
+</view> -->
+<!-- 4. 热门歌单 -->
+<view class="hot-meun">
+	<area-header title="热门歌单" />
+	<scroll-view scroll-x enable-flex class="list">
+		<block wx:for="{{hotSongMenuList}}" wx:key="id">
+			<view class="item">
+				<menu-item itemData="{{item}}" />
+			</view>
+		</block>
+	</scroll-view>
 </view>
+
 <view class="ranking">
 	<area-header title="巅峰榜" hasMore="{{false}}"/>
 </view>

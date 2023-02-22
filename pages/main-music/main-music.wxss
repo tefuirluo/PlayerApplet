@@ -18,3 +18,13 @@ page {
 .banner-image {
 	width: 100%;
 }
+
+/* 歌单样式 */
+.list {
+	display: flex;
+}
+
+.list .item {
+	flex-shrink: 0;
+	width: 220rpx;
+}

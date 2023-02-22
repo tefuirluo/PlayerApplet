@@ -1,7 +1,7 @@
 <!--pages/detail-song/detail-song.wxml-->
 <view>
 	<block wx:for="{{songs}}" wx:key="id">
-		<image src="{{item.al.picUrl}}" mode=""/>
+		<image src="{{item.al.picUrl}}" mode="widthFix"/>
 		<view>
 			{{item.al.name}}-{{item.ar[0].name}}
 		</view>
