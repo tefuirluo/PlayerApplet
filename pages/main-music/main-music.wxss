@@ -18,21 +18,3 @@ page {
 .banner-image {
 	width: 100%;
 }
-
-/* 歌单样式 */
-.list {
-	/* display: flex; */
-	white-space: nowrap;
-	margin-left: -24rpx;
-}
-
-.list .item {
-	/* flex-shrink: 0; */
-	display: inline-block;
-	width: 220rpx;
-	margin-left: 24rpx;
-}
-
-.list .item:last-of-type {
-	margin-right: 24rpx;
-}

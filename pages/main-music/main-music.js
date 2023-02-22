@@ -20,17 +20,20 @@ Page({
 
 		// 歌单数据
 		hotSongMenuList: [],
-		recMenuList: []
+		recMenuList: [],
+		// 巅峰榜数据
+		rankingInfos: {}
 	},
 	onLoad(){
-		this.fetchMusicBanner(),
-		this.fetchHotSongMenuList(),
+		this.fetchMusicBanner()
+		this.fetchHotSongMenuList()
 		// this.fetchRecommendSongs()
 		// 发起 action
-		recommendStore.onState("recommendSongs", (value) => {
-			this.setData({ recommendSongs: value.slice(0, 6)})
-		})
+		recommendStore.onState("recommendSongs", this.handleRecommendSongs)
 		recommendStore.dispatch("fetchRecommendSongActions")
+		rankingStore.onState("newRanking", this.handleNewRanking)
+		rankingStore.onState("originRanking", this.handleOriginRanking)
+		rankingStore.onState("upRanking", this.handleUpRanking)
 		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })
@@ -72,5 +75,27 @@ Page({
 		getSongMenuList("古风").then(res=>{
 			this.setData({ recMenuList: res.playlists })
 		})
+	},
+	// 从 store 中获取数据
+	handleRecommendSongs(value){
+			this.setData({ recommendSongs: value.slice(0, 6)})
+	},
+	handleNewRanking(value){
+		console.log("新歌榜",value);
+		const newRankingInfos = { ...this.data.rankingInfos, newRanking: value }
+		this.setData({ rankingInfos:  newRankingInfos})
+	},
+	handleOriginRanking(value){
+		console.log("原创榜",value);
+		const newRankingInfos = { ...this.data.rankingInfos, originRanking: value }
+		this.setData({ rankingInfos:  newRankingInfos})
+	},
+	handleUpRanking(value){
+		console.log("飙升榜",value);
+		const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
+		this.setData({ rankingInfos:  newRankingInfos})
+	},
+	onUnload(){
+		recommendStore.offState("recommendSongs", this.handleRecommendSongs)
 	}
 })
