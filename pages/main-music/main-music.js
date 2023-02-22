@@ -34,12 +34,13 @@ Page({
 		// rankingStore.onState("newRanking", this.handleNewRanking)
 		// rankingStore.onState("originRanking", this.handleOriginRanking)
 		// rankingStore.onState("upRanking", this.handleUpRanking)
-		for (const key in rankingMap) {
-			rankingStore.onState(key, this.getRankingHandle(key))
-		}
+		// ---------------------------------------------------------------------
 		// rankingStore.onState("newRanking", this.geeRankingHandle("newRanking"))
 		// rankingStore.onState("originRanking", this.geeRankingHandle("originRanking"))
 		// rankingStore.onState("upRanking", this.geeRankingHandle("upRanking"))
+		for (const key in rankingMap) {
+			rankingStore.onState(key, this.getRankingHandle(key))
+		}
 		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })

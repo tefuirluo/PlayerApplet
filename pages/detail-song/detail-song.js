@@ -1,16 +1,29 @@
 // pages/detail-song/detail-song.js
-import recommendStore from "../../store/recommendStore"
+import rankingStore from "../../store/rankingStore"
 Page({
 	data: {
-		songs: []
+		type: "ranking",
+		key: "newRanking",
+
+		songInfo: {}
 	},
-	handleRecomendSongs(value){
-		this.setData({ songs: value })
+	onLoad(options) {
+		// 1. 确定数据的类型
+		const type = options.type
+		this.data.type = type
+		// 获取 store 中榜单中的数据
+		if(type === "ranking"){
+			const key = options.key
+			this.data.key = key
+			rankingStore.onState(key, this.handleRanking)
+		}
 	},
-	onLoad(){
-		recommendStore.onState("recommendSongs", this.handleRecomendSongs)
+	handleRanking(value){
+		this.setData({ songInfo: value })
 	},
 	onUnload(){
-		recommendStore.offState("recommendSongs", this.handleRecomendSongs)
+		if (type === "ranking") {
+			rankingStore.offState(this.data.key, this.handleRanking)
+		}
 	}
 })
