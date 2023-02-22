@@ -25,27 +25,25 @@
 </view>
 
 <!-- 3. 推荐歌曲的展示 -->
-<!-- <view class="recommend">
+<view class="recommend">
 	<area-header title="推荐歌曲" bind:moreClick="onRecommendMoreClick" />
 	<view class="list">
 		<block wx:for="{{recommendSongs}}" wx:key="id">
 			<song-item-v1 itemData="{{item}}" />
 		</block>
 	</view>
-</view> -->
+</view>
 
 <!-- 4. 歌单信息-->
-<!-- <menu-area title="热门歌单" menuList="{{hotSongMenuList}}" />
-<menu-area title="推荐歌单" menuList="{{recMenuList}}" /> -->
+<menu-area title="热门歌单" menuList="{{hotSongMenuList}}" />
+<menu-area title="推荐歌单" menuList="{{recMenuList}}" />
 
 <!-- 5. 巅峰榜 -->
 <view class="ranking">
 	<area-header title="巅峰榜" hasMore="{{false}}"/>
 	<view class="ranking-list">
 		<block wx:for="{{rankingInfos}}" wx:key="id">
-			<view>
-				{{item.name}}
-			</view>
+			<ranking-item itemData="{{item}}" />
 		</block>
 	</view>
 </view>

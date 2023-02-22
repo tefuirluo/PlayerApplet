@@ -81,21 +81,22 @@ Page({
 			this.setData({ recommendSongs: value.slice(0, 6)})
 	},
 	handleNewRanking(value){
-		console.log("新歌榜",value);
 		const newRankingInfos = { ...this.data.rankingInfos, newRanking: value }
 		this.setData({ rankingInfos:  newRankingInfos})
 	},
 	handleOriginRanking(value){
-		console.log("原创榜",value);
 		const newRankingInfos = { ...this.data.rankingInfos, originRanking: value }
 		this.setData({ rankingInfos:  newRankingInfos})
 	},
 	handleUpRanking(value){
-		console.log("飙升榜",value);
 		const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
 		this.setData({ rankingInfos:  newRankingInfos})
 	},
 	onUnload(){
+		// 销毁
 		recommendStore.offState("recommendSongs", this.handleRecommendSongs)
+		rankingStore.offState("newRanking", this.handleNewRanking)
+		rankingStore.offState("originRanking", this.handleOriginRanking)
+		rankingStore.offState("upRanking", this.handleUpRanking)
 	}
 })
