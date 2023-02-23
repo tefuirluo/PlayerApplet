@@ -10,7 +10,13 @@
 
 <!-- 2. 轮播图 -->
 <view>
-	<swiper class="banner" circular indicator-dots style="height: {{bannerHeight}}px;">
+	<swiper 
+		class="banner" 
+		circular 
+		indicator-dots 
+		style="height: {{bannerHeight}}px;"
+		wx:if="{{banners.length}}"
+	>
 		<block wx:for="{{banners}}" wx:key="targetId">
 			<swiper-item class="item">
 				<image
@@ -25,7 +31,7 @@
 </view>
 
 <!-- 3. 推荐歌曲的展示 -->
-<view class="recommend">
+<view class="recommend" wx:if="{{recommendSongs.length}}">
 	<area-header title="推荐歌曲" bind:moreClick="onRecommendMoreClick" />
 	<view class="list">
 		<block wx:for="{{recommendSongs}}" wx:key="id">
@@ -39,7 +45,7 @@
 <menu-area title="推荐歌单" menuList="{{recMenuList}}" />
 
 <!-- 5. 巅峰榜 -->
-<view class="ranking">
+<view class="ranking" wx:if="{{isRankingDatas}}">
 	<area-header title="巅峰榜" hasMore="{{false}}"/>
 	<view class="ranking-list">
 		<block wx:for="{{rankingInfos}}" wx:key="id">

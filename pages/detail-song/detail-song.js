@@ -12,7 +12,8 @@ Page({
 	onLoad(options) {
 		// 1. 确定数据的类型
 		const type = options.type
-		this.data.type = type
+		// this.data.type = type
+		this.setData({ type })
 		// 获取 store 中榜单中的数据
 		if(type === "ranking"){
 			const key = options.key

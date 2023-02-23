@@ -21,7 +21,9 @@ Page({
 		// 歌单数据
 		hotSongMenuList: [],
 		recMenuList: [],
+		
 		// 巅峰榜数据
+		isRankingDatas: false,
 		rankingInfos: {}
 	},
 	onLoad(){
@@ -35,9 +37,9 @@ Page({
 		// rankingStore.onState("originRanking", this.handleOriginRanking)
 		// rankingStore.onState("upRanking", this.handleUpRanking)
 		// ---------------------------------------------------------------------
-		// rankingStore.onState("newRanking", this.geeRankingHandle("newRanking"))
-		// rankingStore.onState("originRanking", this.geeRankingHandle("originRanking"))
-		// rankingStore.onState("upRanking", this.geeRankingHandle("upRanking"))
+		// rankingStore.onState("newRanking", this.getRankingHandle("newRanking"))
+		// rankingStore.onState("originRanking", this.getRankingHandle("originRanking"))
+		// rankingStore.onState("upRanking", this.getRankingHandle("upRanking"))
 		for (const key in rankingMap) {
 			rankingStore.onState(key, this.getRankingHandle(key))
 		}
@@ -102,8 +104,10 @@ Page({
 	// },
 	getRankingHandle(ranking){
 		return value => {
-		const newRankingInfos = { ...this.data.rankingInfos, [ranking]: value }
-		this.setData({ rankingInfos:  newRankingInfos})
+			if(!value.name) return
+			this.setData({isRankingDatas: true})
+			const newRankingInfos = { ...this.data.rankingInfos, [ranking]: value}
+			this.setData({ rankingInfos:  newRankingInfos})
 		}
 	},
 	onUnload(){
