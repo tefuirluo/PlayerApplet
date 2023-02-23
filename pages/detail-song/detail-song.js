@@ -20,6 +20,9 @@ Page({
 	},
 	handleRanking(value){
 		this.setData({ songInfo: value })
+		wx.setNavigationBarTitle({
+			title: value.name
+		})
 	},
 	onUnload(){
 		if (type === "ranking") {
