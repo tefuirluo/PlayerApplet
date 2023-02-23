@@ -16,7 +16,7 @@ Page({
 		recommendSongs: [],
 
 		screenWidth: 375,
-		bannerHeight: 150,
+		bannerHeight: 0,
 
 		// 歌单数据
 		hotSongMenuList: [],
