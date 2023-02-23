@@ -1,5 +1,6 @@
 // pages/detail-song/detail-song.js
 import rankingStore from "../../store/rankingStore"
+import recommendStore from "../../store/recommendStore"
 Page({
 	data: {
 		type: "ranking",
@@ -16,17 +17,24 @@ Page({
 			const key = options.key
 			this.data.key = key
 			rankingStore.onState(key, this.handleRanking)
+		} else if (type === "recommend") {
+			recommendStore.onState("recommendSongInfo", this.handleRanking)
 		}
 	},
 	handleRanking(value){
+		if (this.data.type === "recommend") {
+			value.name = "推荐歌曲"
+		}
 		this.setData({ songInfo: value })
 		wx.setNavigationBarTitle({
 			title: value.name
 		})
 	},
 	onUnload(){
-		if (type === "ranking") {
+		if (this.data.type === "ranking") {
 			rankingStore.offState(this.data.key, this.handleRanking)
+		} else if (this.data.type === "recommend") {
+			recommendStore.offState("recommendSongInfo", this.handleRanking)
 		}
 	}
 })

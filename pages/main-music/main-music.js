@@ -29,7 +29,7 @@ Page({
 		this.fetchHotSongMenuList()
 		// this.fetchRecommendSongs()
 		// 发起 action
-		recommendStore.onState("recommendSongs", this.handleRecommendSongs)
+		recommendStore.onState("recommendSongInfo", this.handleRecommendSongs)
 		recommendStore.dispatch("fetchRecommendSongActions")
 		// rankingStore.onState("newRanking", this.handleNewRanking)
 		// rankingStore.onState("originRanking", this.handleOriginRanking)
@@ -59,7 +59,7 @@ Page({
 	},
 	onRecommendMoreClick(){
 		wx.navigateTo({
-			url: '/pages/detail-song/detail-song',
+			url: '/pages/detail-song/detail-song?type=recommend',
 		})
 	},
 	// 网络请求的方法
@@ -85,7 +85,8 @@ Page({
 	},
 	// 从 store 中获取数据
 	handleRecommendSongs(value){
-			this.setData({ recommendSongs: value.slice(0, 6)})
+		if(!value.tracks) return 
+		this.setData({ recommendSongs: value.tracks.slice(0, 6)})
 	},
 	// handleNewRanking(value){
 	// 	const newRankingInfos = { ...this.data.rankingInfos, newRanking: value }
