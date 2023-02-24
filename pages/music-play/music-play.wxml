@@ -45,6 +45,7 @@
 				block-size="12" 
 				value="{{sliderValue}}"
 				bindchange="onSliderChange"
+				bindchanging="onSliderChanging"
 			/>
 			<view class="time">
 				<view class="current">{{fmt.formatTime(currentTime)}}</view>

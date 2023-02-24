@@ -13,7 +13,8 @@ Page({
 		contentHeight: 0,
 		currentTime: 0,
 		durationTime: 0,
-		sliderValue: 0
+		sliderValue: 0,
+		isSliderChanging: false
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -49,11 +50,14 @@ Page({
 
 		// 4. 监听播放的进度
 		audioContext.onTimeUpdate(() => {
+			if (!this.data.isSliderChanging) {
 			// 1. 记录当前时间 
 			// console.log("onTimeUpdate", audioContext.currentTime);
 			this.setData({ currentTime: audioContext.currentTime * 1000 })
+			// 2. 修改 sliderValue
 			const sliderValue = this.data.currentTime / this.data.durationTime * 100
 			this.setData({ sliderValue })
+			}
 		})
 		audioContext.onWaiting(()=> {
 			audioContext.pause()
@@ -73,12 +77,17 @@ Page({
 	onSliderChange(event){
 		// 1. 获取点击的滑块位置对应的值
 		const value = event.detail.value
-
 		// 2. 计算出要播放的位置时间
 		const currentTime = value / 100 * this.data.durationTime
-
 		// 3. 设置播放器，播放计算出来的时间
 		audioContext.seek(currentTime / 1000)
+		this.setData({ currentTime, isSliderChanging: false })
+	},
+	onSliderChanging(event){
+		const value = event.detail.value
+		const currentTime = value / 100 * this.data.durationTime
 		this.setData({ currentTime })
+		// 滑动
+		this.data.isSliderChanging = true
 	}
 })
