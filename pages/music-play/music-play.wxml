@@ -30,16 +30,27 @@
 			<image class="image" src="{{currentSongs.al.picUrl}}" mode="widthFix"/>
 		</view>
 		<view class="info">
-			歌曲信息
+			<view class="name">
+				{{currentSongs.name}}
+			</view>
+			<view class="singer">{{ currentSongs.ar[0].name }}</view>
 		</view>
 		<view class="lyric">
 			歌词
 		</view>
 		<view class="proress">
-			歌曲进度和时长
+			<slider class="slider" block-size="12"/>
+			<view class="time">
+				<view class="current">03:22</view>
+				<view class="duration">05:45</view>
+			</view>
 		</view>
-		<view class="control">
-			控制
+		<view class="controls">
+			<image class="btn mode" src="/assests/player/play_order.png" mode=""/>
+			<image class="btn prev" src="/assests/player/play_prev.png" mode=""/>
+			<image class="btn play" src="/assests/player/play_resume.png" mode=""/>
+			<image class="btn next" src="/assests/player/play_next.png" mode=""/>
+			<image class="btn list" src="/assests/player/play_music.png" mode=""/>
 		</view>
 	</swiper-item>
 	<swiper-item>歌词</swiper-item>
