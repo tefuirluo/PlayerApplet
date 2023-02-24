@@ -85,5 +85,14 @@
 	width: 100rpx;
 	height: 100rpx;
 }
-
+.lyric-list {
+	color: #aaa;
+	font-size: 28rpx;
+	text-align: center;
+	height: 100%;
+}
+.lyric-list .item {
+	height: 35px;
+	line-height: 35px;
+}
 

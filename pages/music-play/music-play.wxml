@@ -65,6 +65,15 @@
 			<image class="btn list" src="/assests/player/play_music.png" mode=""/>
 		</view>
 	</swiper-item>
-	<swiper-item>歌词</swiper-item>
+	<!-- 歌词 -->
+	<swiper-item>
+		<scroll-view class="lyric-list" scroll-y>
+			<block wx:for="{{lyricInfos}}" wx:key="time">
+				<view class="item">
+					{{item.text}}
+				</view>
+			</block>
+		</scroll-view >
+	</swiper-item>
 	<swiper-item>推荐</swiper-item>
 </swiper>
