@@ -10,7 +10,10 @@ Page({
 		currentSongs: {},
 		lycString: "",
 		currentPage: 0,
-		contentHeight: 0
+		contentHeight: 0,
+		currentTime: 0,
+		durationTime: 0,
+		sliderValue: 0
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -28,7 +31,11 @@ Page({
 		// const res = await getSongDetail(id)
 		// this.setData({ currentSongs: res.songs[0]})
 		getSongDetail(id).then(res => {
-			this.setData({ currentSongs: res.songs[0] })
+			this.setData({ 
+				currentSongs: res.songs[0],
+				durationTime: res.songs[0].dt
+			 })
+
 		})
 
 		// 2.2. 根据 id 获取歌词信息
@@ -39,6 +46,16 @@ Page({
 		audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 		// audioContext.autoplay = true
 		// audioContext.onCanplay()
+
+		// 4. 监听播放的进度
+		audioContext.onTimeUpdate(() => {
+			// 1. 记录当前时间 
+			// console.log("onTimeUpdate", audioContext.currentTime);
+			this.setData({ currentTime: audioContext.currentTime * 1000 })
+			const sliderValue = this.data.currentTime / this.data.durationTime * 100
+			this.setData({ sliderValue })
+		})
+
 	},
 	// 事件监听
 	onSwiperChange(event){

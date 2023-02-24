@@ -1,4 +1,5 @@
 <!--pages/music-play/music-play.wxml-->
+<wxs src="/utils/format.wxs" module="fmt"/>
 
 <!-- 1. 背景展示 -->
 <image class="bg-image" src="{{currentSongs.al.picUrl}}" mode="aspectFill"/>
@@ -39,10 +40,10 @@
 			歌词
 		</view>
 		<view class="proress">
-			<slider class="slider" block-size="12"/>
+			<slider class="slider" block-size="12" value="{{sliderValue}}"/>
 			<view class="time">
-				<view class="current">03:22</view>
-				<view class="duration">05:45</view>
+				<view class="current">{{fmt.formatTime(currentTime)}}</view>
+				<view class="duration">{{fmt.formatTime(durationTime)}}</view>
 			</view>
 		</view>
 		<view class="controls">
