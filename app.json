@@ -22,14 +22,14 @@
 			{
 				"pagePath": "pages/main-music/main-music",
 				"text": "音乐",
-				"iconPath": "/assests/images/disc-line.png",
-				"selectedIconPath": "/assests/images/disc-fill.png"
+				"iconPath": "/assests/images/music_normal.png",
+				"selectedIconPath": "/assests/images/music_active.png"
 			},
 			{
 				"pagePath": "pages/main-vided/main-vided",
 				"text": "视频",
-				"iconPath": "assests/images/mv-line.png",
-				"selectedIconPath": "/assests/images/mv-fill.png"
+				"iconPath": "/assests/images/video_normal.png",
+				"selectedIconPath": "/assests/images/video_active.png"
 			}
 		]
 	},

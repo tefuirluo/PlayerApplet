@@ -4,6 +4,7 @@ const audioContext = wx.createInnerAudioContext()
 
 import { getSongDetail, getSongLyric } from "../../servers/player"
 import { throttle } from 'underscore'
+import { pauseLyric } from "../../utils/pause-lyric"
 
 Page({
 	data: {
@@ -45,7 +46,9 @@ Page({
 
 		// 2.2. 根据 id 获取歌词信息
 		getSongLyric(id).then(res => {
-			this.setData({ lycString: res.lrc.lyric })
+			const lycString = res.lrc.lyric
+			const lyricInfos = pauseLyric(lycString)
+			
 		})
 		// 3. 播放当前的歌曲
 		audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
