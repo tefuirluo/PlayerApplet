@@ -1,0 +1,4 @@
+<!--pages/music-play/music-play.wxml-->
+<view>
+	{{id}}
+</view>

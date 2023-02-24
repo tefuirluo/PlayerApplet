@@ -31,8 +31,8 @@
 </view>
 
 <!-- 3. 推荐歌曲的展示 -->
-<view class="recommend" wx:if="{{recommendSongs.length}}">
-	<area-header title="推荐歌曲" bind:moreClick="onRecommendMoreClick" />
+<view>
+ 	<area-header title="推荐歌曲" bind:moreClick="onRecommendMoreClick" />
 	<view class="list">
 		<block wx:for="{{recommendSongs}}" wx:key="id">
 			<song-item-v1 itemData="{{item}}" />
