@@ -3,6 +3,8 @@ const app = getApp()
 const audioContext = wx.createInnerAudioContext()
 
 import { getSongDetail, getSongLyric } from "../../servers/player"
+import { throttle } from 'underscore'
+
 Page({
 	data: {
 		pageTitles: ["歌曲", "歌词", "推荐"],
@@ -14,7 +16,8 @@ Page({
 		currentTime: 0,
 		durationTime: 0,
 		sliderValue: 0,
-		isSliderChanging: false
+		isSliderChanging: false,
+		isWaiting: false
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -49,14 +52,10 @@ Page({
 		// audioContext.onCanplay()
 
 		// 4. 监听播放的进度
+		const throttleUpDateProgress = throttle(this.upDateProgress, 300,{ leading:false} )
 		audioContext.onTimeUpdate(() => {
-			if (!this.data.isSliderChanging) {
-			// 1. 记录当前时间 
-			// console.log("onTimeUpdate", audioContext.currentTime);
-			this.setData({ currentTime: audioContext.currentTime * 1000 })
-			// 2. 修改 sliderValue
-			const sliderValue = this.data.currentTime / this.data.durationTime * 100
-			this.setData({ sliderValue })
+			if (!this.data.isSliderChanging && !this.data.isWaiting) {
+				throttleUpDateProgress()
 			}
 		})
 		audioContext.onWaiting(()=> {
@@ -65,6 +64,13 @@ Page({
 		audioContext.onCanplay(()=>{
 			audioContext.play()
 		})
+	},
+	upDateProgress(){
+		// 1. 记录当前时间 
+		this.setData({ currentTime: audioContext.currentTime * 1000 })
+		// 2. 修改 sliderValue
+		const sliderValue = this.data.currentTime / this.data.durationTime * 100
+		this.setData({ sliderValue })
 	},
 	// 事件监听
 	onSwiperChange(event){
@@ -75,6 +81,10 @@ Page({
 		this.setData({ currentPage: index })
 	},
 	onSliderChange(event){
+		this.isWaiting = true
+		setTimeout(()=> {
+			this.isWaiting = false
+		}, 1500)
 		// 1. 获取点击的滑块位置对应的值
 		const value = event.detail.value
 		// 2. 计算出要播放的位置时间
