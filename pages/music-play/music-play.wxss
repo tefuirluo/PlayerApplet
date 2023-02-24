@@ -12,21 +12,16 @@
 	backdrop-filter: blur(20px);
 }
 
-/* 自定义导航 */
-.nav {
+/* 导航中的布局 */
+.tabs{
 	display: flex;
-	/* justify-content: space-between; */
-	height: 44px;
-	color: #ffffff;
+	font-size: 28rpx;
+	color: #aaa;
 }
-.left, .center, .right {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.tabs .divider {
+	margin: 0 8rpx;
 }
-.nav .left, .nav .right {
-	width: 120rpx;
+.tabs .active {
+	color: #fff;
 }
-.nav .center {
-	flex: 1;
-}
+

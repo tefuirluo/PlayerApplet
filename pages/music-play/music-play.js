@@ -6,11 +6,16 @@ Page({
 		id: 0,
 		currentSongs: {},
 		lycString: "",
-		statusHeight: 20
+		currentPage: 0,
+		contentHeight: 0
+		// statusHeight: 20
 	},
 	async onLoad(){
 		// 0. 获取设备信息
-		this.setData({ statusHeight: app.globalData.statusHeight })
+		this.setData({ 
+			statusHeight: app.globalData.statusHeight,
+			contentHeight: app.globalData.contentHeight
+		 })
 		// 1. 获取传入的id
 		const id = this.options.id
 		this.setData({ id })
@@ -26,5 +31,9 @@ Page({
 		getSongLyric(id).then(res => {
 			this.setData({ lycString: res.lrc.lyric })
 		})
+	},
+	// 事件监听
+	onSwiperChange(event){
+		this.setData({ currentPage: event.detail.current })
 	}
 })

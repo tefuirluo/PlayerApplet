@@ -5,11 +5,18 @@
 <view class="bg-cover"></view>
 
 <!-- 2. 自定义导航栏 -->
-<view class="nav-bar">
-	<view class="status" style="height: {{statusHeight}}px;"></view>
-	<view class="nav">
-		<view class="left">返回</view>
-		<view class="center">歌曲播放</view>
-		<view class="right"></view>
+<nav-bar>
+	<view class="tabs" slot="center">
+		<view class="item {{ currentPage === 0 ? 'active' : '' }}">歌曲</view>
+		<view class="divider">|</view>
+		<view class="item {{ currentPage === 1 ? 'active' : '' }}">歌词</view>
 	</view>
-</view>
+</nav-bar>
+<!-- 3. 内容页 -->
+<swiper 
+	bindchange="onSwiperChange"
+	style="height: {{contentHeight}}px;"
+>
+	<swiper-item>歌曲</swiper-item>
+	<swiper-item>歌词</swiper-item>
+</swiper>
