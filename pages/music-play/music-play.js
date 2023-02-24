@@ -3,6 +3,7 @@ const app = getApp()
 import { getSongDetail, getSongLyric } from "../../servers/player"
 Page({
 	data: {
+		pageTitles: ["歌曲", "歌词", "推荐"],
 		id: 0,
 		currentSongs: {},
 		lycString: "",
@@ -35,5 +36,9 @@ Page({
 	// 事件监听
 	onSwiperChange(event){
 		this.setData({ currentPage: event.detail.current })
+	},
+	onNavTabItemTap(event){
+		const index = event.currentTarget.dataset.index
+		this.setData({ currentPage: index })
 	}
 })
