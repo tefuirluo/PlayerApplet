@@ -28,6 +28,13 @@
 					"query": "",
 					"launchMode": "default",
 					"scene": null
+				},
+				{
+					"name": "罗生门",
+					"pathName": "pages/music-play/music-play",
+					"query": "id=1456890009",
+					"launchMode": "default",
+					"scene": null
 				}
 			]
 		}

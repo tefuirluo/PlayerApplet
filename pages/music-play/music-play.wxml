@@ -1,4 +1,3 @@
 <!--pages/music-play/music-play.wxml-->
-<view>
-	{{id}}
-</view>
+<view>{{currentSongs.name}}</view>
+<image src="{{currentSongs.al.picUrl}}" mode="widthFix"/>
