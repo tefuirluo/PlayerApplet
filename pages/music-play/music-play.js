@@ -55,7 +55,12 @@ Page({
 			const sliderValue = this.data.currentTime / this.data.durationTime * 100
 			this.setData({ sliderValue })
 		})
-
+		audioContext.onWaiting(()=> {
+			audioContext.pause()
+		})
+		audioContext.onCanplay(()=>{
+			audioContext.play()
+		})
 	},
 	// 事件监听
 	onSwiperChange(event){
@@ -64,5 +69,16 @@ Page({
 	onNavTabItemTap(event){
 		const index = event.currentTarget.dataset.index
 		this.setData({ currentPage: index })
+	},
+	onSliderChange(event){
+		// 1. 获取点击的滑块位置对应的值
+		const value = event.detail.value
+
+		// 2. 计算出要播放的位置时间
+		const currentTime = value / 100 * this.data.durationTime
+
+		// 3. 设置播放器，播放计算出来的时间
+		audioContext.seek(currentTime / 1000)
+		this.setData({ currentTime })
 	}
 })

@@ -40,7 +40,12 @@
 			歌词
 		</view>
 		<view class="proress">
-			<slider class="slider" block-size="12" value="{{sliderValue}}"/>
+			<slider
+				class="slider" 
+				block-size="12" 
+				value="{{sliderValue}}"
+				bindchange="onSliderChange"
+			/>
 			<view class="time">
 				<view class="current">{{fmt.formatTime(currentTime)}}</view>
 				<view class="duration">{{fmt.formatTime(durationTime)}}</view>
