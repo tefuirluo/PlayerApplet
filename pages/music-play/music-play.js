@@ -17,7 +17,8 @@ Page({
 		durationTime: 0,
 		sliderValue: 0,
 		isSliderChanging: false,
-		isWaiting: false
+		isWaiting: false,
+		isPlaying: true
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -99,5 +100,16 @@ Page({
 		this.setData({ currentTime })
 		// 滑动
 		this.data.isSliderChanging = true
+	},
+	onPlayOrPauseTap(){
+		if (!audioContext.paused) {
+			audioContext.pause()
+			this.setData({ isPlaying: false})
+		} else {
+			audioContext.play()
+			this.setData({ isPlaying: true})
+		}
+		
+		
 	}
 })
