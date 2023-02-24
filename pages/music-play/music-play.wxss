@@ -24,4 +24,17 @@
 .tabs .active {
 	color: #fff;
 }
+/* 歌曲布局 */
+.music {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 40rpx 52rpx;
+	font-size: 28rpx;
+	color: #fff;
+}
+.music .album {
+	flex: 1;
+}
+
 

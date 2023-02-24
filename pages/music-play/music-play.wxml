@@ -17,6 +17,22 @@
 	bindchange="onSwiperChange"
 	style="height: {{contentHeight}}px;"
 >
-	<swiper-item>歌曲</swiper-item>
+	<swiper-item class="music">
+		<view class="album">
+			<image class="image" src="{{currentSongs.al.picUrl}}" mode="widthFix"/>
+		</view>
+		<view class="info">
+			歌曲信息
+		</view>
+		<view class="lyric">
+			歌词
+		</view>
+		<view class="proress">
+			歌曲进度和时长
+		</view>
+		<view class="control">
+			控制
+		</view>
+	</swiper-item>
 	<swiper-item>歌词</swiper-item>
 </swiper>
