@@ -12,6 +12,7 @@ Page({
 		id: 0,
 		currentSongs: {},
 		lycString: "",
+		currentLyricText: "",
 		currentPage: 0,
 		contentHeight: 0,
 		currentTime: 0,
@@ -19,7 +20,9 @@ Page({
 		sliderValue: 0,
 		isSliderChanging: false,
 		isWaiting: false,
-		isPlaying: true
+		isPlaying: true,
+		lyricInfos: [],
+		currentLyricIndex: -1
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -48,19 +51,37 @@ Page({
 		getSongLyric(id).then(res => {
 			const lycString = res.lrc.lyric
 			const lyricInfos = pauseLyric(lycString)
-			
+			this.setData({ lyricInfos })
 		})
 		// 3. 播放当前的歌曲
 		audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-		// audioContext.autoplay = true
+		audioContext.autoplay = true
 		// audioContext.onCanplay()
 
 		// 4. 监听播放的进度
-		const throttleUpDateProgress = throttle(this.upDateProgress, 300,{ leading:false} )
+		const throttleUpDateProgress = throttle(
+			this.upDateProgress,
+			 300,
+			 { leading:false, trailing: false})
 		audioContext.onTimeUpdate(() => {
+			// 1. 更新歌曲进度
 			if (!this.data.isSliderChanging && !this.data.isWaiting) {
 				throttleUpDateProgress()
 			}
+			// 2. 匹配正确的歌词
+			if (!this.data.lyricInfos.length) return
+			let index = this.data.lyricInfos.length - 1
+			for (let i = 0; i < this.data.lyricInfos.length; i++) {
+				const info = this.data.lyricInfos[i]
+				if (info.time > audioContext.currentTime * 1000) {
+					index = i - 1
+					break
+				}
+			}
+			// 减少 currentLyricText 歌词的匹配次数
+			if (index === this.data.currentLyricIndex) return
+			const currentLyricText = this.data.lyricInfos[index].text
+			this.setData({ currentLyricText, currentLyricIndex: index })
 		})
 		audioContext.onWaiting(()=> {
 			audioContext.pause()
@@ -71,10 +92,9 @@ Page({
 	},
 	upDateProgress(){
 		// 1. 记录当前时间 
-		this.setData({ currentTime: audioContext.currentTime * 1000 })
-		// 2. 修改 sliderValue
 		const sliderValue = this.data.currentTime / this.data.durationTime * 100
-		this.setData({ sliderValue })
+		this.setData({ currentTime: audioContext.currentTime * 1000, sliderValue })
+		
 	},
 	// 事件监听
 	onSwiperChange(event){

@@ -37,7 +37,7 @@
 			<view class="singer">{{ currentSongs.ar[0].name }}</view>
 		</view>
 		<view class="lyric">
-			歌词
+			{{currentLyricText}}
 		</view>
 		<view class="proress">
 			<slider
