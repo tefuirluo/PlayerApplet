@@ -3,3 +3,13 @@
 <!-- 1. 背景展示 -->
 <image class="bg-image" src="{{currentSongs.al.picUrl}}" mode="aspectFill"/>
 <view class="bg-cover"></view>
+
+<!-- 2. 自定义导航栏 -->
+<view class="nav-bar">
+	<view class="status" style="height: {{statusHeight}}px;"></view>
+	<view class="nav">
+		<view class="left">返回</view>
+		<view class="center">歌曲播放</view>
+		<view class="right"></view>
+	</view>
+</view>

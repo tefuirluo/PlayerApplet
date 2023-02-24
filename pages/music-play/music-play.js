@@ -1,12 +1,16 @@
 // pages/music-play/music-play.js
+const app = getApp()
 import { getSongDetail, getSongLyric } from "../../servers/player"
 Page({
 	data: {
 		id: 0,
 		currentSongs: {},
-		lycString: ""
+		lycString: "",
+		statusHeight: 20
 	},
 	async onLoad(){
+		// 0. 获取设备信息
+		this.setData({ statusHeight: app.globalData.statusHeight })
 		// 1. 获取传入的id
 		const id = this.options.id
 		this.setData({ id })
