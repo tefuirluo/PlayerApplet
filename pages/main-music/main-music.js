@@ -65,9 +65,11 @@ Page({
 			url: '/pages/detail-song/detail-song?type=recommend',
 		})
 	},
-	onSongItemTap() {
+	onSongItemTap(event) {
 		// console.log(this.data.recommendSongs);
+		const index = event.currentTarget.dataset.index
 		playerStore.setState("playSongList", this.data.recommendSongs)
+		playerStore.setState("playSongIndex", index)
 	},
 	// 网络请求的方法
 	async fetchMusicBanner(){

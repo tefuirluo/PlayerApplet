@@ -24,7 +24,10 @@ Page({
 		isPlaying: true,
 		lyricInfos: [],
 		currentLyricIndex: -1,
-		lyricScrollTop: 0
+		lyricScrollTop: 0,
+
+		playSongIndex: 0,
+		playSongList: []
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -98,7 +101,7 @@ Page({
 			audioContext.play()
 		})
 		// 5. 获取 store 的共享数据
-		playerStore.onState("playSongList", this.getPlaySongListHandler)
+		playerStore.onStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
 	},
 	upDateProgress(){
 		// 1. 记录当前时间 
@@ -144,10 +147,17 @@ Page({
 		}
 	},
 	// store 共享数据
-	getPlaySongListHandler(value){
+	getPlaySongInfosHandler({ playSongList, playSongIndex }){
 		console.log(value);
+		if (value.playSongList) {
+			this.setData({ playSongList})
+		}
+		// index 有为 0 的可能
+		if (playSongIndex !== undefined) {
+			this.setData({ playSongIndex })
+		}
 	},
 	onUnload(){
-		playerStore.offState("playSongList", this.getPlaySongListHandler)
+		playerStore.offStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
 	}
 })
