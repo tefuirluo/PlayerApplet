@@ -85,6 +85,7 @@
 	width: 100rpx;
 	height: 100rpx;
 }
+/* 歌词的样式 */
 .lyric-list {
 	color: #aaa;
 	font-size: 28rpx;
@@ -95,4 +96,17 @@
 	height: 35px;
 	line-height: 35px;
 }
-
+.lyric-list .item.active {
+	color: #fff;
+	font-size: 32rpx;
+	font-weight: 500;
+}
+.lyric-list ::-webkit-scrollbar {
+	display: none;
+}
+/* .lyric-list .item:first-of-type {
+	padding-top: 40%;
+}
+.lyric-list .item:last-of-type {
+	padding-bottom: 50%;
+} */

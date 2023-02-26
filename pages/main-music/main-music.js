@@ -1,6 +1,7 @@
 import { getMusicBanner, getMusicPlayListDetail, getSongMenuList } from "../../servers/music"
 import recommendStore from "../../store/recommendStore"
 import rankingStore, { rankingMap } from "../../store/rankingStore"
+import playerStore from "../../store/playStore"
 import querySelect from "../../utils/query-select"
 import { throttle } from "underscore"
 
@@ -63,6 +64,10 @@ Page({
 		wx.navigateTo({
 			url: '/pages/detail-song/detail-song?type=recommend',
 		})
+	},
+	onSongItemTap() {
+		// console.log(this.data.recommendSongs);
+		playerStore.setState("playSongList", this.data.recommendSongs)
 	},
 	// 网络请求的方法
 	async fetchMusicBanner(){

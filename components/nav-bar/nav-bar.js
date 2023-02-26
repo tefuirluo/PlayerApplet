@@ -20,5 +20,10 @@ Component({
 		attached() {
 			this.setData({ statusHeight: app.globalData.statusHeight })
 		}
+	},
+	methods: {
+		onGoBackLastPage(){
+			wx.navigateBack()
+		}
 	}
 })

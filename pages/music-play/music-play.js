@@ -3,6 +3,7 @@ const app = getApp()
 const audioContext = wx.createInnerAudioContext()
 
 import { getSongDetail, getSongLyric } from "../../servers/player"
+import playerStore from "../../store/playStore"
 import { throttle } from 'underscore'
 import { pauseLyric } from "../../utils/pause-lyric"
 
@@ -22,7 +23,8 @@ Page({
 		isWaiting: false,
 		isPlaying: true,
 		lyricInfos: [],
-		currentLyricIndex: -1
+		currentLyricIndex: -1,
+		lyricScrollTop: 0
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -80,8 +82,14 @@ Page({
 			}
 			// 减少 currentLyricText 歌词的匹配次数
 			if (index === this.data.currentLyricIndex) return
+
+			// 获取歌词索引 index 和 文本 text
 			const currentLyricText = this.data.lyricInfos[index].text
-			this.setData({ currentLyricText, currentLyricIndex: index })
+			this.setData({ 
+				currentLyricText, 
+				currentLyricIndex: index,
+				lyricScrollTop: 35 * index
+			 })
 		})
 		audioContext.onWaiting(()=> {
 			audioContext.pause()
@@ -89,6 +97,8 @@ Page({
 		audioContext.onCanplay(()=>{
 			audioContext.play()
 		})
+		// 5. 获取 store 的共享数据
+		playerStore.onState("playSongList", this.getPlaySongListHandler)
 	},
 	upDateProgress(){
 		// 1. 记录当前时间 
@@ -132,7 +142,12 @@ Page({
 			audioContext.play()
 			this.setData({ isPlaying: true})
 		}
-		
-		
+	},
+	// store 共享数据
+	getPlaySongListHandler(value){
+		console.log(value);
+	},
+	onUnload(){
+		playerStore.offState("playSongList", this.getPlaySongListHandler)
 	}
 })

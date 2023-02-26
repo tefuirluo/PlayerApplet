@@ -2,6 +2,7 @@
 import rankingStore from "../../store/rankingStore"
 import recommendStore from "../../store/recommendStore"
 import {getMusicPlayListDetail} from "../../servers/music"
+import playerStore from "../../store/playStore"
 Page({
 	data: {
 		type: "ranking",
@@ -31,6 +32,11 @@ Page({
 		const res = await getMusicPlayListDetail(this.data.id)
 		this.setData({ songInfo: res.playlist })
 	},
+	// wxml 事件监听
+	onItemTap(){
+		playerStore.setState("playSongList", this.data.songInfo.tracks)
+	},
+	// store 共享数据
 	handleRanking(value){
 		if (this.data.type === "recommend") {
 			value.name = "推荐歌曲"
@@ -46,5 +52,6 @@ Page({
 		} else if (this.data.type === "recommend") {
 			recommendStore.offState("recommendSongInfo", this.handleRanking)
 		}
+		playerStore.offState("playSongList", this.data.songInfo.tracks)
 	}
 })
