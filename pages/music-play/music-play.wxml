@@ -53,7 +53,7 @@
 			</view>
 		</view>
 		<view class="controls">
-			<image class="btn mode" src="/assests/player/play_order.png" mode=""/>
+			<image class="btn mode" src="/assests/player/play_{{playModeName}}.png" bindtap="onModeBtnTap"/>
 			<image class="btn prev" src="/assests/player/play_prev.png" bindtap="onPrevBtnTap" />
 			<image 
 				class="btn play" 
@@ -62,7 +62,7 @@
 				bindtap="onPlayOrPauseTap"
 			/>
 			<image class="btn next" src="/assests/player/play_next.png" bindtap="onNextBtnTap"/>
-			<image class="btn list" src="/assests/player/play_music.png" mode=""/>
+			<image class="btn list" src="/assests/player/play_music.png" />
 		</view>
 	</swiper-item>
 	<!-- 歌词 -->
