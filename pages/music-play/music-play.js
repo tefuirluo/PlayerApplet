@@ -146,10 +146,30 @@ Page({
 			this.setData({ isPlaying: true})
 		}
 	},
+	onPrevBtnTap(){
+		this.changeNewSong(false)
+	},
+	onNextBtnTap(){
+		this.changeNewSong()
+	},
+	changeNewSong(isNext = true){
+				// 获取之前的数据
+				const length = this.data.playSongList.length
+				let index = this.data.playSongIndex
+				// 根据之前的数据计算最新的索引
+				index = isNext ? index + 1 : index - 1
+				if (index === length) { index = 0 }
+				if (index === -1) { index = length - 1 }
+				// 根据索引获取当前歌曲的信息
+				const newSong = this.data.playSongList[index]
+				console.log(newSong);
+		
+				// 保存最新的索引值 
+				playerStore.setState("playSongIndex", index)
+	},
 	// store 共享数据
 	getPlaySongInfosHandler({ playSongList, playSongIndex }){
-		console.log(value);
-		if (value.playSongList) {
+		if (playSongList) {
 			this.setData({ playSongList})
 		}
 		// index 有为 0 的可能
