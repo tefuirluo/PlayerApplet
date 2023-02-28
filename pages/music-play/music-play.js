@@ -126,6 +126,9 @@ Page({
 		}
 	},
 	// 事件监听
+	onNavBtnTap(){
+		wx.navigateBack()
+	},
 	onSwiperChange(event){
 		this.setData({ currentPage: event.detail.current })
 	},

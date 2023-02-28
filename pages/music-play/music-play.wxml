@@ -6,7 +6,7 @@
 <view class="bg-cover"></view>
 
 <!-- 2. 自定义导航栏 -->
-<nav-bar>
+<nav-bar bind:leftClick="onNavBtnTap">
 	<view class="tabs" slot="center">
 		<block wx:for="{{pageTitles}}" wx:key="*this">
 			<view 

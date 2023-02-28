@@ -22,8 +22,8 @@ Component({
 		}
 	},
 	methods: {
-		onGoBackLastPage(){
-			wx.navigateBack()
+		onLeftClick(){
+			this.triggerEvent("leftClick")
 		}
 	}
 })

@@ -2,12 +2,12 @@
 <view class="nav-bar">
 	<view class="status" style="height: {{statusHeight}}px;"></view>
 	<view class="nav">
-		<view class="left">
+		<view class="left" bindtap="onLeftClick">
 			<view class="slot">
 				<slot name="left"></slot>
 			</view>
 			<view class="default">
-				<van-icon name="arrow-left" size="20px" bindtap="onGoBackLastPage"/>
+				<van-icon name="arrow-left" size="20px" />
 			</view>
 		</view>
 		<view class="center">
