@@ -121,6 +121,7 @@ Page({
 				audioContext.play()
 			})
 			audioContext.onEnded(() => {
+				if (audioContext.loop) return
 				this.changeNewSong()
 			})
 		}
@@ -149,13 +150,14 @@ Page({
 		audioContext.seek(currentTime / 1000)
 		this.setData({ currentTime, isSliderChanging: false })
 	},
-	onSliderChanging(event){
+	// 节流
+	onSliderChanging: throttle(function(event){
 		const value = event.detail.value
 		const currentTime = value / 100 * this.data.durationTime
 		this.setData({ currentTime })
 		// 滑动
 		this.data.isSliderChanging = true
-	},
+	}),
 	onPlayOrPauseTap(){
 		if (!audioContext.paused) {
 			audioContext.pause()
@@ -177,13 +179,14 @@ Page({
 				let index = this.data.playSongIndex
 				// 根据之前的数据计算最新的索引
 				switch (this.data.playModeIndex) {
+					case 1:	// 单曲循环 case 穿透
 					case 0: // 顺序播放
 						index = isNext ? index + 1 : index - 1
 						if (index === length) { index = 0 }
 						if (index === -1) { index = length - 1 }
 						break
-					case 1: // 单曲循环
-						break
+					// case 1: // 单曲循环
+					// 	break
 					case 2: // 随机播放
 						index = Math.floor(Math.random() * length)
 						break
@@ -201,9 +204,19 @@ Page({
 				playerStore.setState("playSongIndex", index)
 	},
 	onModeBtnTap(){
+		// 1. 计算新的模式
 		let modeIndex = this.data.playModeIndex
 		modeIndex = modeIndex + 1
 		if (modeIndex === 3) modeIndex = 0
+		
+		// 设置是否是单曲循环
+		if (modeIndex === 1) {
+			audioContext.loop = true
+		} else {
+			audioContext.loop = false
+		}
+
+		// 2. 保存当前的模式
 		this.setData({ playModeIndex: modeIndex, playModeName: modeNames[modeIndex] })
 	},
 	// store 共享数据
