@@ -18,40 +18,39 @@ const playerStore = new HYEventStore({
 		currentLyricIndex: -1,
 
 		isFirstPlay: true,
-		isPlaying: false
+
+		isPlaying: false,
+		playModeIndex: 0
 	},
 	actions: {
 		playMusicWithSongIdAction(ctx, id){
-			// 保存 id
+			// 重置
+			ctx.currentSongs= {}
+			ctx.sliderValue = 0,
+			ctx.currentTime = 0,
+			ctx.durationTime = 0,
+			ctx.currentLyricIndex = 0,
+			ctx.currentLyricText = ""
+			ctx.lyricInfos = []
+
 			ctx.id = id
 			ctx.isPlaying = true
-
-			// 2 请求歌曲相关的数据
-			// 2.1 根据 id 获取歌曲的详情
 			getSongDetail(id).then(res => {	
 				 ctx.currentSongs = res.songs[0]
 				 ctx.durationTime = res.songs[0].dt
 			})
-	
-			// 2.2. 根据 id 获取歌词信息
 			getSongLyric(id).then(res => {
 				const lycString = res.lrc.lyric
 				const lyricInfos = pauseLyric(lycString)
 				ctx.lyricInfos = lyricInfos
 			})
-			// 3. 播放当前的歌曲
 			audioContext.stop()
 			audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 			audioContext.autoplay = true
-	
-			// 4. 监听播放的进度
 			if(ctx.isFirstPlay) {
 				ctx.isFirstPlay = false	
-
 				audioContext.onTimeUpdate(() => {
-					// 1. 获取当前播放的时间
 					ctx.currentTime = audioContext.currentTime * 1000
-					// 2. 匹配正确的歌词
 					if (!ctx.lyricInfos.length) return
 					let index = ctx.lyricInfos.length - 1
 					for (let i = 0; i < ctx.lyricInfos.length; i++) {
@@ -61,10 +60,7 @@ const playerStore = new HYEventStore({
 							break
 						}
 					}
-					// 减少 currentLyricText 歌词的匹配次数
 					if (index === ctx.currentLyricIndex) return
-		
-					// 获取歌词索引 index 和 文本 text
 					const currentLyricText = ctx.lyricInfos[index].text
 					ctx.currentLyricText = currentLyricText
 					ctx.currentLyricIndex = index
@@ -77,13 +73,11 @@ const playerStore = new HYEventStore({
 				})
 				audioContext.onEnded(() => {
 					if (audioContext.loop) return
-					// this.changeNewSong()
-					// TODO
-					// 切换歌曲
+					this.dispatch("playNewMusicAction")
 				})
 			}
 		},
-		playMusicStatusAction(ctx){
+		changePlayMusicStatusAction(ctx){
 			if (!audioContext.paused) {
 				audioContext.pause()
 				ctx.isPlaying = false
@@ -91,6 +85,35 @@ const playerStore = new HYEventStore({
 				audioContext.play()
 				ctx.isPlaying = true
 			}
+		},
+		changePlayModeAction(ctx){
+			let modeIndex = ctx.playModeIndex
+			modeIndex = modeIndex + 1
+			if (modeIndex === 3) modeIndex = 0
+			if (modeIndex === 1) {
+				audioContext.loop = true
+			} else {
+				audioContext.loop = false
+			}
+			ctx.playModeIndex = modeIndex
+		},
+		playNewMusicAction(ctx, isNext = true) {
+			const length = ctx.playSongList.length
+			let index = ctx.playSongIndex
+			switch (ctx.playModeIndex) {
+				case 1:	// 单曲循环
+				case 0: // 顺序播放
+					index = isNext ? index + 1 : index - 1
+					if (index === length) { index = 0 }
+					if (index === -1) { index = length - 1 }
+					break
+				case 2: // 随机播放
+					index = Math.floor(Math.random() * length)
+					break		
+			}	
+			const newSong = ctx.playSongList[index]
+			this.dispatch("playMusicWithSongIdAction", newSong.id)
+			ctx.playSongIndex = index
 		}
 	}
 })

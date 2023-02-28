@@ -10,7 +10,7 @@ const modeNames = ["order", "repeat", "random"]
 Page({
 	data: {
 		id: 0,
-		stateKeys: ["id", "currentSongs", "durationTime", "currentTime", "lyricInfos", "currentLyricText", "currentLyricIndex", "isPlaying"],
+		stateKeys: ["id", "currentSongs", "durationTime", "currentTime", "lyricInfos", "currentLyricText", "currentLyricIndex", "isPlaying", "playModeIndex"],
 
 		currentSongs: {},
 		currentTime: 0,
@@ -25,7 +25,6 @@ Page({
 		playSongList: [],
 		isFirstPlay: true,
 
-		playModeIndex: 0, // 0 => 顺序播放	1 => 单曲循环		2 => 随机播放
 		playModeName: "order",
 
 		pageTitles: ["歌曲", "歌词"],
@@ -86,59 +85,16 @@ onLoad(options){
 		this.data.isSliderChanging = true
 	}),
 	onPlayOrPauseTap(){
-		playerStore.dispatch("playMusicStatusAction")
+		playerStore.dispatch("changePlayMusicStatusAction")
 	},
 	onPrevBtnTap(){
-		this.changeNewSong(false)
+		playerStore.dispatch("playNewMusicAction", false)
 	},
 	onNextBtnTap(){
-		this.changeNewSong()
-	},
-	changeNewSong(isNext = true){
-				// 获取之前的数据
-				const length = this.data.playSongList.length
-				let index = this.data.playSongIndex
-				// 根据之前的数据计算最新的索引
-				switch (this.data.playModeIndex) {
-					case 1:	// 单曲循环 case 穿透
-					case 0: // 顺序播放
-						index = isNext ? index + 1 : index - 1
-						if (index === length) { index = 0 }
-						if (index === -1) { index = length - 1 }
-						break
-					// case 1: // 单曲循环
-					// 	break
-					case 2: // 随机播放
-						index = Math.floor(Math.random() * length)
-						break
-					
-				}	
-				// 根据索引获取当前歌曲的信息
-				const newSong = this.data.playSongList[index]
-				// console.log(newSong);
-				// 初始化之前的数据
-				this.setData({ currentSongs: {}, sliderValue: 0, currentTime: 0, durationTime: 0 })
-				// 开始播放之前的数据
-				this.setupPlaySong(newSong.id)
-		
-				// 保存最新的索引值 
-				playerStore.setState("playSongIndex", index)
+		playerStore.dispatch("playNewMusicAction", true)
 	},
 	onModeBtnTap(){
-		// 1. 计算新的模式
-		let modeIndex = this.data.playModeIndex
-		modeIndex = modeIndex + 1
-		if (modeIndex === 3) modeIndex = 0
-		
-		// 设置是否是单曲循环
-		if (modeIndex === 1) {
-			audioContext.loop = true
-		} else {
-			audioContext.loop = false
-		}
-
-		// 2. 保存当前的模式
-		this.setData({ playModeIndex: modeIndex, playModeName: modeNames[modeIndex] })
+		playerStore.dispatch("changePlayModeAction")
 	},
 	// store 共享数据
 	getPlaySongInfosHandler({ playSongList, playSongIndex }){
@@ -153,7 +109,7 @@ onLoad(options){
 	getPlayerInfosHandler({
 		id, currentSongs, durationTime, currentTime, 
 		lyricInfos, currentLyricText, currentLyricIndex, 
-		isPlaying
+		isPlaying, playModeIndex
 	}){
 		if (id !== undefined) {
 			this.setData({ id })
@@ -172,7 +128,6 @@ onLoad(options){
 			this.setData({ lyricInfos })
 		}
 		if (currentLyricText) {
-			this.setData({ currentLyricText })
 		}
 		if (currentLyricIndex !== undefined) {
 			//  修改 lyricScrollTop
@@ -180,6 +135,9 @@ onLoad(options){
 		}
 		if (isPlaying !== undefined) {
 			this.setData({ isPlaying })
+		}
+		if (playModeIndex !== undefined) {
+			this.setData({ playModeName: modeNames[playModeIndex] })
 		}
 	},
 	onUnload(){
