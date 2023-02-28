@@ -12,6 +12,7 @@ import { pauseLyric } from "../../utils/pause-lyric"
 Page({
 	data: {
 		id: 0,
+		stateKeys: ["id", "currentSongs", "durationTime", "currentTime", "lyricInfos", "currentLyricText", "currentLyricIndex"],
 
 		currentSongs: {},
 		currentTime: 0,
@@ -39,105 +40,36 @@ Page({
 		lyricScrollTop: 0
 		// statusHeight: 20
 	},
-	async onLoad(){
+onLoad(options){
 		// 0. 获取设备信息
 		this.setData({ 
 			statusHeight: app.globalData.statusHeight,
 			contentHeight: app.globalData.contentHeight
 		 })
 		// 1. 获取传入的id
-		const id = this.options.id
-
-		// 2. 根据 id 播放歌曲
-		// this.setupPlaySong(id)
-		// const throttleUpDateProgress = throttle( this.upDateProgress, 300, {
-		// 	leading: false, 
-		// 	trailing: false 
+		const id = options.id
+		// 更新歌曲的进度
+		// const throttleUpDateProgress = throttle(this.upDateProgress, 500, {
+		// 	 leading: false,
+		// 	 trailing: false
 		// })
-		// 1. 更新歌曲进度
 		// if (!this.data.isSliderChanging && !this.data.isWaiting) {
 		// 	throttleUpDateProgress()
 		// }
 		playerStore.dispatch("playMusicWithSongId", id)
+		
 
 		// 5. 获取 store 的共享数据
 		playerStore.onStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
+		playerStore.onStates(this.data.stateKeys, this.getPlayerInfosHandler)
 	},
-	upDateProgress(){
-		// 1. 记录当前时间 
-		const sliderValue = this.data.currentTime / this.data.durationTime * 100
-		this.setData({ currentTime: audioContext.currentTime * 1000, sliderValue })
-	},
+	upDateProgress: throttle(function(currentTime) {
+			// 1. 记录当前时间 
+			// 2. 修改 sliderValue
+			const sliderValue = currentTime / this.data.durationTime * 100
+			this.setData({ currentTime, sliderValue })
+	}, 800, { leading: false, trailing: false }),
 
-	// 播放歌曲的逻辑
-	setupPlaySong(id){
-		this.setData({ id })
-		// 2 请求歌曲相关的数据
-		// 2.1 根据 id 获取歌曲的详情
-		getSongDetail(id).then(res => {
-			this.setData({ 
-				currentSongs: res.songs[0],
-				durationTime: res.songs[0].dt
-			 })
-		})
-
-		// 2.2. 根据 id 获取歌词信息
-		getSongLyric(id).then(res => {
-			const lycString = res.lrc.lyric
-			const lyricInfos = pauseLyric(lycString)
-			this.setData({ lyricInfos })
-		})
-		// 3. 播放当前的歌曲
-		audioContext.stop()
-		audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-		audioContext.autoplay = true
-		// audioContext.onCanplay()
-
-		// 4. 监听播放的进度
-		if(this.data.isFirstPlay) {
-			this.data.isFirstPlay = false
-			const throttleUpDateProgress = throttle(
-				this.upDateProgress,
-				 300,
-				 { leading:false, trailing: false})
-			audioContext.onTimeUpdate(() => {
-				// 1. 更新歌曲进度
-				if (!this.data.isSliderChanging && !this.data.isWaiting) {
-					throttleUpDateProgress()
-				}
-				// 2. 匹配正确的歌词
-				if (!this.data.lyricInfos.length) return
-				let index = this.data.lyricInfos.length - 1
-				for (let i = 0; i < this.data.lyricInfos.length; i++) {
-					const info = this.data.lyricInfos[i]
-					if (info.time > audioContext.currentTime * 1000) {
-						index = i - 1
-						break
-					}
-				}
-				// 减少 currentLyricText 歌词的匹配次数
-				if (index === this.data.currentLyricIndex) return
-	
-				// 获取歌词索引 index 和 文本 text
-				const currentLyricText = this.data.lyricInfos[index].text
-				this.setData({ 
-					currentLyricText, 
-					currentLyricIndex: index,
-					lyricScrollTop: 35 * index
-				 })
-			})
-			audioContext.onWaiting(()=> {
-				audioContext.pause()
-			})
-			audioContext.onCanplay(()=>{
-				audioContext.play()
-			})
-			audioContext.onEnded(() => {
-				if (audioContext.loop) return
-				this.changeNewSong()
-			})
-		}
-	},
 	// 事件监听
 	onNavBtnTap(){
 		wx.navigateBack()
@@ -241,7 +173,36 @@ Page({
 			this.setData({ playSongIndex })
 		}
 	},
+	getPlayerInfosHandler({
+		id, currentSongs, durationTime, currentTime, 
+		lyricInfos, currentLyricText, currentLyricIndex
+	}){
+		if (id !== undefined) {
+			this.setData({ id })
+		}
+		if (currentSongs) {
+			this.setData({ currentSongs })
+		}
+		if (durationTime !== undefined) {
+			this.setData({ durationTime })
+		}
+		if (currentTime !== undefined) {
+			// 根据当前时间改变进度
+			this.upDateProgress(currentTime)
+		}
+		if (lyricInfos) {
+			this.setData({ lyricInfos })
+		}
+		if (currentLyricText) {
+			this.setData({ currentLyricText })
+		}
+		if (currentLyricIndex !== undefined) {
+			//  修改 lyricScrollTop
+			this.setData({ currentLyricIndex, lyricScrollTop: currentLyricIndex * 35 })
+		}
+	},
 	onUnload(){
 		playerStore.offStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
+		playerStore.offState(this.data.stateKeys, this.getPlayerInfosHandler)
 	}
 })

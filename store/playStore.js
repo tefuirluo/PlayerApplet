@@ -17,7 +17,7 @@ const playerStore = new HYEventStore({
 		currentLyricText: "",
 		currentLyricIndex: -1,
 
-		isFirstPlay: true,
+		isFirstPlay: true
 	},
 	actions: {
 		playMusicWithSongId(ctx, id){
@@ -27,7 +27,7 @@ const playerStore = new HYEventStore({
 			// 2 请求歌曲相关的数据
 			// 2.1 根据 id 获取歌曲的详情
 			getSongDetail(id).then(res => {	
-				 ctx.currentSongs = res.songs[0],
+				 ctx.currentSongs = res.songs[0]
 				 ctx.durationTime = res.songs[0].dt
 			})
 	
@@ -44,13 +44,13 @@ const playerStore = new HYEventStore({
 	
 			// 4. 监听播放的进度
 			if(ctx.isFirstPlay) {
-				ctx.isFirstPlay = false
+				ctx.isFirstPlay = false	
 
 				audioContext.onTimeUpdate(() => {
 					// 1. 获取当前播放的时间
-					ctx.currentTime = audioContext.currentTime
+					ctx.currentTime = audioContext.currentTime * 1000
 					// 2. 匹配正确的歌词
-					if (!ctx.data.lyricInfos.length) return
+					if (!ctx.lyricInfos.length) return
 					let index = ctx.lyricInfos.length - 1
 					for (let i = 0; i < ctx.lyricInfos.length; i++) {
 						const info = ctx.lyricInfos[i]
@@ -60,7 +60,7 @@ const playerStore = new HYEventStore({
 						}
 					}
 					// 减少 currentLyricText 歌词的匹配次数
-					if (index === ctx.currentLyricIndex || index === -1) return
+					if (index === ctx.currentLyricIndex) return
 		
 					// 获取歌词索引 index 和 文本 text
 					const currentLyricText = ctx.lyricInfos[index].text
