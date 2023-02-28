@@ -2,7 +2,7 @@ import { HYEventStore } from "hy-event-store"
 import { pauseLyric } from "../utils/pause-lyric"
 import { getSongDetail, getSongLyric } from "../servers/player"
 
-const audioContext = wx.createInnerAudioContext()
+export const audioContext = wx.createInnerAudioContext()
 
 const playerStore = new HYEventStore({
 	state: {
@@ -17,12 +17,14 @@ const playerStore = new HYEventStore({
 		currentLyricText: "",
 		currentLyricIndex: -1,
 
-		isFirstPlay: true
+		isFirstPlay: true,
+		isPlaying: false
 	},
 	actions: {
-		playMusicWithSongId(ctx, id){
+		playMusicWithSongIdAction(ctx, id){
 			// 保存 id
 			ctx.id = id
+			ctx.isPlaying = true
 
 			// 2 请求歌曲相关的数据
 			// 2.1 根据 id 获取歌曲的详情
@@ -79,6 +81,15 @@ const playerStore = new HYEventStore({
 					// TODO
 					// 切换歌曲
 				})
+			}
+		},
+		playMusicStatusAction(ctx){
+			if (!audioContext.paused) {
+				audioContext.pause()
+				ctx.isPlaying = false
+			} else {
+				audioContext.play()
+				ctx.isPlaying = true
 			}
 		}
 	}

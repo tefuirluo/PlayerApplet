@@ -1,18 +1,16 @@
 // pages/music-play/music-play.js
-const app = getApp()
-const audioContext = wx.createInnerAudioContext()
-
-const modeNames = ["order", "repeat", "random"]
-
 import { getSongDetail, getSongLyric } from "../../servers/player"
-import playerStore from "../../store/playStore"
+import playerStore, { audioContext } from "../../store/playStore"
 import { throttle } from 'underscore'
 import { pauseLyric } from "../../utils/pause-lyric"
+
+const app = getApp()
+const modeNames = ["order", "repeat", "random"]
 
 Page({
 	data: {
 		id: 0,
-		stateKeys: ["id", "currentSongs", "durationTime", "currentTime", "lyricInfos", "currentLyricText", "currentLyricIndex"],
+		stateKeys: ["id", "currentSongs", "durationTime", "currentTime", "lyricInfos", "currentLyricText", "currentLyricIndex", "isPlaying"],
 
 		currentSongs: {},
 		currentTime: 0,
@@ -46,24 +44,13 @@ onLoad(options){
 			statusHeight: app.globalData.statusHeight,
 			contentHeight: app.globalData.contentHeight
 		 })
-		// 1. 获取传入的id
 		const id = options.id
-		// 更新歌曲的进度
-		// const throttleUpDateProgress = throttle(this.upDateProgress, 500, {
-		// 	 leading: false,
-		// 	 trailing: false
-		// })
-		// if (!this.data.isSliderChanging && !this.data.isWaiting) {
-		// 	throttleUpDateProgress()
-		// }
-		playerStore.dispatch("playMusicWithSongId", id)
-		
-
-		// 5. 获取 store 的共享数据
+		playerStore.dispatch("playMusicWithSongIdAction", id)
 		playerStore.onStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
 		playerStore.onStates(this.data.stateKeys, this.getPlayerInfosHandler)
 	},
 	upDateProgress: throttle(function(currentTime) {
+		if (this.data.isSliderChanging) return
 			// 1. 记录当前时间 
 			// 2. 修改 sliderValue
 			const sliderValue = currentTime / this.data.durationTime * 100
@@ -81,35 +68,25 @@ onLoad(options){
 		const index = event.currentTarget.dataset.index
 		this.setData({ currentPage: index })
 	},
+	// 节流
 	onSliderChange(event){
 		this.isWaiting = true
 		setTimeout(()=> {
 			this.isWaiting = false
 		}, 1500)
-		// 1. 获取点击的滑块位置对应的值
 		const value = event.detail.value
-		// 2. 计算出要播放的位置时间
 		const currentTime = value / 100 * this.data.durationTime
-		// 3. 设置播放器，播放计算出来的时间
 		audioContext.seek(currentTime / 1000)
 		this.setData({ currentTime, isSliderChanging: false })
 	},
-	// 节流
 	onSliderChanging: throttle(function(event){
 		const value = event.detail.value
 		const currentTime = value / 100 * this.data.durationTime
 		this.setData({ currentTime })
-		// 滑动
 		this.data.isSliderChanging = true
 	}),
 	onPlayOrPauseTap(){
-		if (!audioContext.paused) {
-			audioContext.pause()
-			this.setData({ isPlaying: false})
-		} else {
-			audioContext.play()
-			this.setData({ isPlaying: true})
-		}
+		playerStore.dispatch("playMusicStatusAction")
 	},
 	onPrevBtnTap(){
 		this.changeNewSong(false)
@@ -175,7 +152,8 @@ onLoad(options){
 	},
 	getPlayerInfosHandler({
 		id, currentSongs, durationTime, currentTime, 
-		lyricInfos, currentLyricText, currentLyricIndex
+		lyricInfos, currentLyricText, currentLyricIndex, 
+		isPlaying
 	}){
 		if (id !== undefined) {
 			this.setData({ id })
@@ -199,6 +177,9 @@ onLoad(options){
 		if (currentLyricIndex !== undefined) {
 			//  修改 lyricScrollTop
 			this.setData({ currentLyricIndex, lyricScrollTop: currentLyricIndex * 35 })
+		}
+		if (isPlaying !== undefined) {
+			this.setData({ isPlaying })
 		}
 	},
 	onUnload(){
