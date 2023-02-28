@@ -11,29 +11,32 @@ import { pauseLyric } from "../../utils/pause-lyric"
 
 Page({
 	data: {
-		pageTitles: ["歌曲", "歌词", "推荐"],
 		id: 0,
+
 		currentSongs: {},
-		lycString: "",
-		currentLyricText: "",
-		currentPage: 0,
-		contentHeight: 0,
 		currentTime: 0,
 		durationTime: 0,
-		sliderValue: 0,
-		isSliderChanging: false,
-		isWaiting: false,
-		isPlaying: true,
 		lyricInfos: [],
+		currentLyricText: "",
 		currentLyricIndex: -1,
-		lyricScrollTop: 0,
+
+		isPlaying: true,
 
 		playSongIndex: 0,
 		playSongList: [],
 		isFirstPlay: true,
 
 		playModeIndex: 0, // 0 => 顺序播放	1 => 单曲循环		2 => 随机播放
-		playModeName: "order"
+		playModeName: "order",
+
+		pageTitles: ["歌曲", "歌词"],
+		currentPage: 0,
+		contentHeight: 0,
+		sliderValue: 0,
+		isSliderChanging: false,
+		isWaiting: false,
+
+		lyricScrollTop: 0
 		// statusHeight: 20
 	},
 	async onLoad(){
@@ -46,7 +49,16 @@ Page({
 		const id = this.options.id
 
 		// 2. 根据 id 播放歌曲
-		this.setupPlaySong(id)
+		// this.setupPlaySong(id)
+		// const throttleUpDateProgress = throttle( this.upDateProgress, 300, {
+		// 	leading: false, 
+		// 	trailing: false 
+		// })
+		// 1. 更新歌曲进度
+		// if (!this.data.isSliderChanging && !this.data.isWaiting) {
+		// 	throttleUpDateProgress()
+		// }
+		playerStore.dispatch("playMusicWithSongId", id)
 
 		// 5. 获取 store 的共享数据
 		playerStore.onStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
