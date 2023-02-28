@@ -28,7 +28,8 @@ Page({
 		rankingInfos: {},
 
 		// 播放工具栏
-		currentSongs: {}
+		currentSongs: {},
+		isPlaying: false
 	},
 	onLoad(){
 		this.fetchMusicBanner()
@@ -40,7 +41,7 @@ Page({
 		for (const key in rankingMap) {
 			rankingStore.onState(key, this.getRankingHandle(key))
 		}
-		playerStore.onStates(["currentSongs"], this.handlePlayInfos)
+		playerStore.onStates(["currentSongs", "isPlaying"], this.handlePlayInfos)
 		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })
@@ -68,6 +69,9 @@ Page({
 		playerStore.setState("playSongList", this.data.recommendSongs)
 		playerStore.setState("playSongIndex", index)
 	},
+	onPlayOrPauseBtnTap(){
+		playerStore.dispatch("changePlayMusicStatusAction")
+	},
 	// 网络请求的方法
 	async fetchMusicBanner(){
 		const res = await getMusicBanner()
@@ -94,9 +98,12 @@ Page({
 			this.setData({ rankingInfos:  newRankingInfos})
 		}
 	},
-	handlePlayInfos({ currentSongs }){
+	handlePlayInfos({ currentSongs, isPlaying }){
 		if (currentSongs) {
 			this.setData({ currentSongs })
+		}
+		if (isPlaying !== undefined) {
+			this.setData({ isPlaying })
 		}
 	},
 	onUnload(){
@@ -105,6 +112,6 @@ Page({
 		rankingStore.offState("newRanking", this.handleNewRanking)
 		rankingStore.offState("originRanking", this.handleOriginRanking)
 		rankingStore.offState("upRanking", this.handleUpRanking)
-		playerStore.offStates(["currentSongs"], this.handlePlayInfos)
+		playerStore.offStates(["currentSongs", "isPlaying"], this.handlePlayInfos)
 	}
 })
