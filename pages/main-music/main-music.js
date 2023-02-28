@@ -25,7 +25,10 @@ Page({
 		
 		// 巅峰榜数据
 		isRankingDatas: false,
-		rankingInfos: {}
+		rankingInfos: {},
+
+		// 播放工具栏
+		currentSongs: {}
 	},
 	onLoad(){
 		this.fetchMusicBanner()
@@ -34,16 +37,10 @@ Page({
 		// 发起 action
 		recommendStore.onState("recommendSongInfo", this.handleRecommendSongs)
 		recommendStore.dispatch("fetchRecommendSongActions")
-		// rankingStore.onState("newRanking", this.handleNewRanking)
-		// rankingStore.onState("originRanking", this.handleOriginRanking)
-		// rankingStore.onState("upRanking", this.handleUpRanking)
-		// ---------------------------------------------------------------------
-		// rankingStore.onState("newRanking", this.getRankingHandle("newRanking"))
-		// rankingStore.onState("originRanking", this.getRankingHandle("originRanking"))
-		// rankingStore.onState("upRanking", this.getRankingHandle("upRanking"))
 		for (const key in rankingMap) {
 			rankingStore.onState(key, this.getRankingHandle(key))
 		}
+		playerStore.onStates(["currentSongs"], this.handlePlayInfos)
 		rankingStore.dispatch("fetchRankingDataAction")
 		// 获取屏幕尺寸
 		this.setData({ screenWidth: app.globalData.screenWidth })
@@ -76,15 +73,7 @@ Page({
 		const res = await getMusicBanner()
 		this.setData({ banners: res.banners })
 	},
-	// async fetchRecommendSongs(){
-	// 	const res = await getMusicPlayListDetail(3778678)
-	// 	const playlist = res.playlist
-	// 	const recommendSongs = playlist.tracks.slice(0, 6)
-	// 	this.setData({ recommendSongs })
-	// }
 	async fetchHotSongMenuList(){
-		// const res = await getSongMenuList()
-		// this.setData({ hotSongMenuList: res.playlists })
 		getSongMenuList().then(res=>{
 			this.setData({ hotSongMenuList: res.playlists })
 		}),
@@ -97,18 +86,6 @@ Page({
 		if(!value.tracks) return 
 		this.setData({ recommendSongs: value.tracks.slice(0, 6)})
 	},
-	// handleNewRanking(value){
-	// 	const newRankingInfos = { ...this.data.rankingInfos, newRanking: value }
-	// 	this.setData({ rankingInfos:  newRankingInfos})
-	// },
-	// handleOriginRanking(value){
-	// 	const newRankingInfos = { ...this.data.rankingInfos, originRanking: value }
-	// 	this.setData({ rankingInfos:  newRankingInfos})
-	// },
-	// handleUpRanking(value){
-	// 	const newRankingInfos = { ...this.data.rankingInfos, upRanking: value }
-	// 	this.setData({ rankingInfos:  newRankingInfos})
-	// },
 	getRankingHandle(ranking){
 		return value => {
 			if(!value.name) return
@@ -117,11 +94,17 @@ Page({
 			this.setData({ rankingInfos:  newRankingInfos})
 		}
 	},
+	handlePlayInfos({ currentSongs }){
+		if (currentSongs) {
+			this.setData({ currentSongs })
+		}
+	},
 	onUnload(){
 		// 销毁
 		recommendStore.offState("recommendSongs", this.handleRecommendSongs)
 		rankingStore.offState("newRanking", this.handleNewRanking)
 		rankingStore.offState("originRanking", this.handleOriginRanking)
 		rankingStore.offState("upRanking", this.handleUpRanking)
+		playerStore.offStates(["currentSongs"], this.handlePlayInfos)
 	}
 })

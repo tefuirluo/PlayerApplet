@@ -1,8 +1,6 @@
 // pages/music-play/music-play.js
-import { getSongDetail, getSongLyric } from "../../servers/player"
 import playerStore, { audioContext } from "../../store/playStore"
 import { throttle } from 'underscore'
-import { pauseLyric } from "../../utils/pause-lyric"
 
 const app = getApp()
 const modeNames = ["order", "repeat", "random"]
@@ -142,6 +140,6 @@ onLoad(options){
 	},
 	onUnload(){
 		playerStore.offStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
-		playerStore.offState(this.data.stateKeys, this.getPlayerInfosHandler)
+		playerStore.offStates(this.data.stateKeys, this.getPlayerInfosHandler)
 	}
 })

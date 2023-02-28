@@ -53,3 +53,16 @@
 		</block>
 	</view>
 </view>
+
+<!-- 6. 播放工具栏 -->
+<view class="play-bar-placeholder" wx:if="{{currentSongs.name}}}"></view>
+<view class="play-bar" wx:if="{{currentSongs.name}}">
+	<view class="left">
+		<image class="album" src="{{ currentSongs.al.picUrl }}"></image>
+		<view class="name">{{currentSongs.name}}</view>
+	</view>
+	<view class="right">
+		<image class="play" src="../../assests/music/pause_icon.png" mode=""/>
+		<image class="icon" src="../../assests/music/playlist_icon.png" mode=""/>
+	</view>
+</view>
