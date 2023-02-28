@@ -72,6 +72,11 @@ Page({
 	onPlayOrPauseBtnTap(){
 		playerStore.dispatch("changePlayMusicStatusAction")
 	},
+	onPlayBarAlbumTap(){
+		wx.navigateTo({
+			url: '/pages/music-play/music-play',
+		})
+	},
 	// 网络请求的方法
 	async fetchMusicBanner(){
 		const res = await getMusicBanner()

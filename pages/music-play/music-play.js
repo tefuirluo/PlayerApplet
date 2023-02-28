@@ -42,7 +42,7 @@ onLoad(options){
 			contentHeight: app.globalData.contentHeight
 		 })
 		const id = options.id
-		playerStore.dispatch("playMusicWithSongIdAction", id)
+		if (id) playerStore.dispatch("playMusicWithSongIdAction", id)
 		playerStore.onStates(["playSongList", "playSongIndex"], this.getPlaySongInfosHandler)
 		playerStore.onStates(this.data.stateKeys, this.getPlayerInfosHandler)
 	},
