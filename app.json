@@ -2,15 +2,37 @@
 	"pages": [
 		"pages/main-music/main-music",
 		"pages/main-vided/main-vided",
-		"pages/homePage/homePage",
 		"components/video-item/video-item",
-		"pages/detail-video/detail-video",
 		"pages/detail-search/detail-search",
 		"components/song-item-v1/song-item-v1",
 		"pages/detail-song/detail-song",
-		"pages/detail-menu/detail-menu",
-		"pages/music-play/music-play"
+		"pages/detail-menu/detail-menu"
 	],
+	"subPackages": [
+		{
+			"root": "packageVideo",
+			"name": "video",
+			"pages": [
+				"pages/detail-video/detail-video"
+			]
+		},
+		{
+			"root": "packagePlay",
+			"name": "play",
+			"pages": [
+				"pages/music-play/music-play"
+			]
+		}
+	],
+	"preloadRule": {
+		"pages/main-music/main-music": {
+			"network": "wifi",
+			"packages": [
+				"packagePlay",
+				"video"
+			]
+		}
+	},
 	"window": {
 		"backgroundTextStyle": "dark",
 		"navigationBarBackgroundColor": "#e3e3e3",
@@ -22,14 +44,14 @@
 			{
 				"pagePath": "pages/main-music/main-music",
 				"text": "音乐",
-				"iconPath": "/assests/images/music_normal.png",
-				"selectedIconPath": "/assests/images/music_active.png"
+				"iconPath": "/packagePlay/assets/images/music_normal.png",
+				"selectedIconPath": "/packagePlay/assets/images/music_active.png"
 			},
 			{
 				"pagePath": "pages/main-vided/main-vided",
 				"text": "视频",
-				"iconPath": "/assests/images/video_normal.png",
-				"selectedIconPath": "/assests/images/video_active.png"
+				"iconPath": "/packagePlay/assets/images/video_normal.png",
+				"selectedIconPath": "/packagePlay/assets/images/video_active.png"
 			}
 		]
 	},

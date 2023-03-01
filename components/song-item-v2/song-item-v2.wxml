@@ -6,7 +6,7 @@
 			{{itemData.name}}
 		</view>
 		<view class="source">
-			<image class="icon" src="/assests/icons/sq_icon.png" mode=""/>
+			<image class="icon" src="/assets/sq_icon.png" mode=""/>
 			<text>{{itemData.ar[0].name}}</text>
 		</view>
 	</view>

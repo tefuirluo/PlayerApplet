@@ -53,16 +53,16 @@
 			</view>
 		</view>
 		<view class="controls">
-			<image class="btn mode" src="/assests/player/play_{{playModeName}}.png" bindtap="onModeBtnTap"/>
-			<image class="btn prev" src="/assests/player/play_prev.png" bindtap="onPrevBtnTap" />
+			<image class="btn mode" src="/packagePlay/assets/player/play_{{playModeName}}.png" bindtap="onModeBtnTap"/>
+			<image class="btn prev" src="/packagePlay/assets/player/play_prev.png" bindtap="onPrevBtnTap" />
 			<image 
 				class="btn play" 
-				src="/assests/player/play_{{ isPlaying ? 'pause' : 'resume' }}.png" 
+				src="/packagePlay/assets/player/play_{{ isPlaying ? 'pause' : 'resume' }}.png" 
 				mode=""
 				bindtap="onPlayOrPauseTap"
 			/>
-			<image class="btn next" src="/assests/player/play_next.png" bindtap="onNextBtnTap"/>
-			<image class="btn list" src="/assests/player/play_music.png" />
+			<image class="btn next" src="/packagePlay/assets/player/play_next.png" bindtap="onNextBtnTap"/>
+			<image class="btn list" src="/packagePlay/assets/player/play_music.png" />
 		</view>
 	</swiper-item>
 	<!-- 歌词 -->

@@ -1,5 +1,5 @@
 // pages/music-play/music-play.js
-import playerStore, { audioContext } from "../../store/playStore"
+import playerStore, { audioContext } from "../../../store/playStore"
 import { throttle } from 'underscore'
 
 const app = getApp()

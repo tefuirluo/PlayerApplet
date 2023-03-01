@@ -1,5 +1,5 @@
 // pages/detail-video/detail-video.js
-import { getMvUrl, getMvInfo, getMvRelate } from "../../servers/video"
+import { getMvUrl, getMvInfo, getMvRelate } from "../../../servers/video"
 Page({
 
 	/**
